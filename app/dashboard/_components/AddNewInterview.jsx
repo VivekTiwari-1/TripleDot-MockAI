@@ -72,7 +72,8 @@ const AddNewInterview = () => {
       console.log(resp);
       if (resp) {
         setOpenDialog(false);
-        router.push("/dashboard/interview/" + resp[0]?.mockId);
+        router.push("/dashboard/interview/" + resp[0]?.mockId) +
+          "/technicalRound";
       }
     } else {
       console.log("ERROR");
@@ -103,25 +104,34 @@ const AddNewInterview = () => {
                     and years of experience
                   </h2>
 
-                  <div className="mt-7 my-2">
-                    <label>Job Role/Job Position</label>
+                  <div className="mt-7 my-7 text-black">
+                    <label className="text-[1rem] font-semibold">
+                      Job Role/Job Position
+                    </label>
                     <Input
+                      className="mt-2"
                       placeholder="Ex. Full Stack Developer"
                       required
                       onChange={(event) => setJobPosition(event.target.value)}
                     />
                   </div>
-                  <div className="mt-3 my-2">
-                    <label>Job Description/ Tech Stack (In short)</label>
+                  <div className="mt-3 my-7 text-black">
+                    <label className="text-[1rem] font-semibold">
+                      Job Description/ Tech Stack (In short)
+                    </label>
                     <Textarea
+                      className="mt-2"
                       placeholder="Ex. React, Angular, NodeJs, MySql, etc."
                       required
                       onChange={(event) => setJobDesc(event.target.value)}
                     />
                   </div>
-                  <div className="mt-3 my-2">
-                    <label>Years of Experience</label>
+                  <div className="mt-3 my-4 text-black">
+                    <label className="text-[1rem] font-semibold">
+                      Years of Experience
+                    </label>
                     <Input
+                      className="mt-2"
                       placeholder="Ex. 4"
                       type="number"
                       required
@@ -141,7 +151,7 @@ const AddNewInterview = () => {
                     {loading ? (
                       <>
                         <LoaderCircle className="animate-spin" />
-                        Generating from Gemini
+                        Generating Questions
                       </>
                     ) : (
                       "Start Interview"

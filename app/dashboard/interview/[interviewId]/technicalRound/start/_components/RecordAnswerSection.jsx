@@ -2,7 +2,13 @@
 
 import "regenerator-runtime/runtime";
 import { Button } from "@/components/ui/button";
-import { Mic, StopCircle, WebcamIcon } from "lucide-react";
+import {
+  CircleCheckBig,
+  CircleX,
+  Mic,
+  StopCircle,
+  WebcamIcon,
+} from "lucide-react";
 import React, { useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import SpeechRecognition, {
@@ -53,6 +59,7 @@ const RecordAnswerSection = ({
       if (transcript?.length < 10) {
         toast({
           description: "Error while saving your answer, Please record again!!",
+          action: <CircleX className="text-red-600 text-xl" />,
         });
         resetTranscript;
         return;
@@ -71,7 +78,7 @@ const RecordAnswerSection = ({
       mockInterviewQuestion[activeQuestionIndex]?.question +
       ", User answer:" +
       userAnswer +
-      ". Depends on question and user answer for given interview questions. Please give us rating and feedback as area of improvement if any in just 3 to 5 line in JSON format with rating field and feedback field";
+      ". Depends on question and user answer for given interview questions. Please give us rating out of 10 and feedback as area of improvement if any in just 3 to 5 line in JSON format with rating field and feedback field";
 
     const result = await chatSession.sendMessage(feedbackPrompt);
 
@@ -100,7 +107,10 @@ const RecordAnswerSection = ({
     console.log(resp);
 
     if (resp) {
-      toast({ description: "User answer recorded successfully!!" });
+      toast({
+        description: "User answer recorded successfully!!",
+        action: <CircleCheckBig className="text-green-600" />,
+      });
       setUserAnswer("");
       resetTranscript;
     }

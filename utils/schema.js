@@ -22,3 +22,25 @@ export const UserAnswer = pgTable("userAnswer", {
   userEmail: varchar("userEmail"),
   createdAt: varchar("createdAt"),
 });
+
+export const AlgoInterview = pgTable("algoInterview", {
+  id: serial("id").primaryKey(),
+  jsonMockResp: text("jsonMockResp").notNull(),
+  jobPosition: varchar("jobPosition").notNull(),
+  language: varchar("language").notNull(),
+  jobExperience: varchar("jobExperience").notNull(),
+  createdBy: varchar("createdBy").notNull(),
+  createdAt: varchar("createdAt").notNull(),
+  mockId: varchar("mockId").notNull(),
+});
+
+export const CodingInterview = pgTable("codingInterview", {
+  id: serial("id").primaryKey(),
+  jsonMockResp: text("jsonMockResp").notNull(),
+  jobPosition: varchar("jobPosition").notNull(),
+  language: varchar("language").notNull(),
+  jobExperience: varchar("jobExperience").notNull(),
+  createdBy: varchar("createdBy").notNull(),
+  createdAt: varchar("createdAt").notNull(),
+  mockId: varchar("mockId").notNull(),
+});
