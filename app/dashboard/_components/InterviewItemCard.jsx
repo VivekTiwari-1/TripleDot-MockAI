@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import React from "react";
 
-const InterviewItemCard = ({ interview }) => {
+const InterviewItemCard = ({ interview, type }) => {
   return (
     <div className="border shadow-sm rounded-lg p-3">
       <h2 className="font-bold text-xl text-primary">
@@ -20,7 +20,9 @@ const InterviewItemCard = ({ interview }) => {
           href={
             "/dashboard/interview/" +
             interview?.mockId +
-            "/technicalRound/feedback"
+            "/" +
+            type +
+            "/feedback"
           }
           className="w-full"
         >
@@ -29,7 +31,7 @@ const InterviewItemCard = ({ interview }) => {
           </Button>
         </Link>
         <Link
-          href={"/dashboard/interview/" + interview?.mockId + "/technicalRound"}
+          href={"/dashboard/interview/" + interview?.mockId + "/" + type}
           className="w-full"
         >
           <Button size="sm" className="w-full">

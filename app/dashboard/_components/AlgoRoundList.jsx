@@ -1,13 +1,13 @@
 "use client";
 
 import { db } from "@/utils/db";
-import { MockInterview } from "@/utils/schema";
+import { AlgoInterview } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { desc, eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import InterviewItemCard from "./InterviewItemCard";
 
-const InterviewList = () => {
+const AlgoRoundList = () => {
   const { user } = useUser();
   const [interviewList, setInterviewList] = useState([]);
 
@@ -18,18 +18,18 @@ const InterviewList = () => {
   const getInterviewList = async () => {
     const result = await db
       .select()
-      .from(MockInterview)
+      .from(AlgoInterview)
       .where(
-        eq(MockInterview.createdBy, user?.primaryEmailAddress?.emailAddress)
+        eq(AlgoInterview.createdBy, user?.primaryEmailAddress?.emailAddress)
       )
-      .orderBy(desc(MockInterview.id));
+      .orderBy(desc(AlgoInterview.id));
 
     // console.log(result);
     setInterviewList(result);
   };
   return (
     <div>
-      <h2 className="font-medium text-2xl mt-24">Previous Mock Interview</h2>
+      <h2 className="font-medium text-2xl mt-24">Previous Algorithm Round</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3">
         {interviewList &&
@@ -37,7 +37,7 @@ const InterviewList = () => {
             <InterviewItemCard
               interview={interview}
               key={index}
-              type="technicalRound"
+              type="algorithmRound"
             />
           ))}
       </div>
@@ -45,4 +45,4 @@ const InterviewList = () => {
   );
 };
 
-export default InterviewList;
+export default AlgoRoundList;

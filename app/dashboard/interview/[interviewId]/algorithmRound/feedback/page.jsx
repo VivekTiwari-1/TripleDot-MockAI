@@ -73,7 +73,7 @@ const page = ({ params }) => {
           </div>
 
           <Link href={"/dashboard"}>
-            <Button className="my-8">Go Home</Button>
+            <Button className="my-8">Go to Dashboard</Button>
           </Link>
         </div>
       )}

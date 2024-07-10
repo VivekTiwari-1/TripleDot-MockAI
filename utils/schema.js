@@ -44,3 +44,14 @@ export const CodingInterview = pgTable("codingInterview", {
   createdAt: varchar("createdAt").notNull(),
   mockId: varchar("mockId").notNull(),
 });
+
+export const CodingFeedback = pgTable("codingFeedback", {
+  id: serial("id").primaryKey(),
+  mockIdRef: varchar("mockId").notNull(),
+  question: varchar("question").notNull(),
+  correctAns: text("correctAns"),
+  userAns: text("userAns"),
+  feedback: text("feedback"),
+  userEmail: varchar("userEmail"),
+  createdAt: varchar("createdAt"),
+});

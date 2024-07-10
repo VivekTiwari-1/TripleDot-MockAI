@@ -1,7 +1,10 @@
 "use client";
 
-import AddCodingAlgorithm from "./_components/addCodingAlgorithm";
+import AddNewAlgoRound from "./_components/AddNewAlgoRound";
+import AddNewCodingRound from "./_components/AddNewCodingRound";
 import AddNewInterview from "./_components/AddNewInterview";
+import AlgoRoundList from "./_components/AlgoRoundList";
+import CodingRoundList from "./_components/CodingRoundList";
 import InterviewList from "./_components/InterviewList";
 
 const Dashboard = () => {
@@ -11,16 +14,15 @@ const Dashboard = () => {
       <h2 className="text-gray-500">Create and Start your AI Mockup</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 my-5 gap-4">
-        <div>
-          <AddCodingAlgorithm />
-        </div>
-        <div>
-          <AddNewInterview />
-        </div>
+        <AddNewInterview />
+        <AddNewCodingRound />
+        <AddNewAlgoRound />
       </div>
 
       {/* Previous Interview Lists */}
       <InterviewList />
+      <CodingRoundList />
+      <AlgoRoundList />
     </div>
   );
 };

@@ -9,42 +9,46 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import { chatSession } from "@/utils/GeminiAIModel";
 import { LoaderCircle } from "lucide-react";
-import { MockInterview } from "@/utils/schema";
-import { v4 as uuidv4 } from "uuid";
-import { useUser } from "@clerk/nextjs";
-import moment from "moment";
+import Link from "next/link";
 import { db } from "@/utils/db";
+import moment from "moment";
+import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import { CodingInterview } from "@/utils/schema";
+import { v4 as uuidv4 } from "uuid";
 
-const AddNewInterview = () => {
-  const [openDialog, setOpenDialog] = useState(false);
+const AddNewCodingRound = () => {
+  const [openDialog1, setOpenDialog1] = useState(false);
+  const [openDialog2, setOpenDialog2] = useState(false);
   const [jobPosition, setJobPosition] = useState();
-  const [jobDesc, setJobDesc] = useState();
+  const [language, setLanguage] = useState();
   const [jobExperience, setJobExperience] = useState();
 
   const [loading, setLoading] = useState(false);
   const [jsonResponse, setJsonResponse] = useState([]);
+
   const { user } = useUser();
   const router = useRouter();
 
-  const onSubmit = async (e) => {
+  const onSubmitCode = async (e) => {
     e.preventDefault();
 
     setLoading(true);
 
     const InputPrompt =
-      "Job position:" +
+      `I need to create a coding problem for the mock interview.` +
+      "Job position: " +
       jobPosition +
-      ", Job Description:" +
-      jobDesc +
-      ", Years of experience:" +
+      ", Years of experience: " +
       jobExperience +
-      " - Based on this information, generate 5 interview questions and their answers in JSON format. Give questions and answers as fields in JSON";
+      " -  Based on this information generate a problem and its solution in " +
+      language +
+      ` language in this JSON structure without any extra space in between - { "question": { "title": "", "difficulty": "", "description": "", "input_format": "", "output_format": "", "constraints": "", "sample_input": [ "", "" ], "sample_output": [ "", "" ], "explanation": "", "platform": "", "hint": "" }, "code_solution": { "title": "", "explanation": "", "code": "" } }`;
 
     const result = await chatSession.sendMessage(InputPrompt);
     const MockJsonResp = result.response
@@ -52,29 +56,29 @@ const AddNewInterview = () => {
       .replace("```json", "")
       .replace("```", "");
 
-    console.log(MockJsonResp);
+    // console.log(MockJsonResp);
+    // console.log(JSON.parse(MockJsonResp));
+
     setJsonResponse(MockJsonResp);
 
     if (MockJsonResp) {
       const resp = await db
-        .insert(MockInterview)
+        .insert(CodingInterview)
         .values({
           mockId: uuidv4(),
           jsonMockResp: MockJsonResp,
           jobPosition: jobPosition,
-          jobDesc: jobDesc,
+          language: language,
           jobExperience: jobExperience,
           createdBy: user?.primaryEmailAddress?.emailAddress,
           createdAt: moment().format("DD-MM-YYYY"),
         })
-        .returning({ mockId: MockInterview.mockId });
+        .returning({ mockId: CodingInterview.mockId });
 
       console.log(resp);
       if (resp) {
-        setOpenDialog(false);
-        router.push(
-          "/dashboard/interview/" + resp[0]?.mockId + "/technicalRound"
-        );
+        setOpenDialog2(false);
+        router.push("/dashboard/interview/" + resp[0]?.mockId + "/codingRound");
       }
     } else {
       console.log("ERROR");
@@ -82,23 +86,22 @@ const AddNewInterview = () => {
 
     setLoading(false);
   };
-
   return (
     <div>
       <div
-        className="p-10 border rounded-lg bg-secondary hover:scale-105 hover:shadow-sm cursor-pointer transition-all"
-        onClick={() => setOpenDialog(true)}
+        className="p-10 border rounded-lg bg-secondary hover:scale-105 hover:shadow-sm cursor-pointer transition-all "
+        onClick={() => setOpenDialog2(true)}
       >
-        <h2 className="text-lg text-center">Add New</h2>
+        <h2 className="text-lg text-center">Add New Coding Round</h2>
       </div>
-      <Dialog open={openDialog}>
+      <Dialog open={openDialog2}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle className="text-2xl">
-              Tell us more about your job interviewing
+              Tell us more about your Coding Interview
             </DialogTitle>
             <DialogDescription>
-              <form onSubmit={onSubmit}>
+              <form onSubmit={onSubmitCode}>
                 <div>
                   <h2>
                     Add details about your job position/role, Job description
@@ -111,20 +114,20 @@ const AddNewInterview = () => {
                     </label>
                     <Input
                       className="mt-2"
-                      placeholder="Ex. Full Stack Developer"
+                      placeholder="Ex. Software developer"
                       required
                       onChange={(event) => setJobPosition(event.target.value)}
                     />
                   </div>
                   <div className="mt-3 my-7 text-black">
                     <label className="text-[1rem] font-semibold">
-                      Job Description/ Tech Stack (In short)
+                      Programming Language
                     </label>
-                    <Textarea
+                    <Input
                       className="mt-2"
-                      placeholder="Ex. React, Angular, NodeJs, MySql, etc."
+                      placeholder="Ex. Java, Cpp or Python"
                       required
-                      onChange={(event) => setJobDesc(event.target.value)}
+                      onChange={(event) => setLanguage(event.target.value)}
                     />
                   </div>
                   <div className="mt-3 my-4 text-black">
@@ -144,7 +147,7 @@ const AddNewInterview = () => {
                   <Button
                     type="button"
                     variant="ghost"
-                    onClick={() => setOpenDialog(false)}
+                    onClick={() => setOpenDialog2(false)}
                   >
                     Cancel
                   </Button>
@@ -168,4 +171,4 @@ const AddNewInterview = () => {
   );
 };
 
-export default AddNewInterview;
+export default AddNewCodingRound;

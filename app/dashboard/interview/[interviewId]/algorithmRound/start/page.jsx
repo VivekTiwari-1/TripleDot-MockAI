@@ -46,7 +46,7 @@ const page = ({ params }) => {
           href={
             "/dashboard/interview/" +
             params.interviewId +
-            "/codingAndAlgorithm/algorithmRound/feedback"
+            "/algorithmRound/feedback"
           }
         >
           <Button>Submit Algo</Button>

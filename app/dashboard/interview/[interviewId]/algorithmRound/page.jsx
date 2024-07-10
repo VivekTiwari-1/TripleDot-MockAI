@@ -56,7 +56,7 @@ const AlgorithmRound = ({ params }) => {
             href={
               "/dashboard/interview/" +
               params.interviewId +
-              "/codingAndAlgorithm/algorithmRound/start"
+              "/algorithmRound/start"
             }
           >
             <Button>Start Interview</Button>
