@@ -31,57 +31,72 @@ const page = ({ params }) => {
   };
   return (
     <div className="pt-12">
-      <h1 className="text-center text-2xl font-bold">SOLUTION</h1>
-      <div className="w-[50%]">
-        <div>
-          <strong>Title: </strong>
-          {correctAnswer?.title}
-        </div>
-        <div className="mt-10 bg-slate-200 ">
-          <strong>Correct Solution: </strong>
-          <FormatCode code={correctAnswer?.code} language="java" />
-        </div>
-        <div className="mt-10">
-          <strong>Explanation: </strong>
-          {correctAnswer?.explanation}
+      <div className="">
+        <h2 className="text-3xl font-bold text-green-500 mb-6">
+          Congratulations!{" "}
+          <span className="text-black text-2xl">
+            {" "}
+            on completing this Challange
+          </span>
+        </h2>
+
+        <div className="bg-gray-300 rounded-xl p-4">
+          <h2 className="font-bold text-2xl">
+            Here is your personalized feedback{" "}
+          </h2>
+          {solutionFeedback && (
+            //console.log(JSON.parse(interview?.feedback).message)
+            <div className="my-8">
+              <div className="mb-6">
+                {/* <h1 className="text-xl font-semibold mb-4">Message</h1> */}
+                <p>{solutionFeedback?.message}</p>
+              </div>
+
+              <h1 className="mb-4">
+                <span className="text-lg font-semibold ">Correctness: </span>
+                {solutionFeedback?.correctness}
+              </h1>
+
+              <h1 className="mb-4">
+                <span className="text-lg font-semibold ">Approach: </span>
+                {solutionFeedback?.approach}
+              </h1>
+
+              <h1 className="mb-4">
+                <span className="text-lg font-semibold ">Efficiency: </span>
+                {solutionFeedback?.efficiency}
+              </h1>
+              <h1 className="mb-4">
+                <span className="text-lg font-semibold ">Code Quality: </span>
+                {solutionFeedback?.code_quality}
+              </h1>
+              <h1 className="mb-4">
+                <span className="text-lg font-semibold ">Optimization: </span>
+                {solutionFeedback?.optimization}
+              </h1>
+              <h1 className="mb-4">
+                <span className="text-lg font-semibold ">
+                  Overall Feedback:{" "}
+                </span>
+                {solutionFeedback?.overall_feedback}
+              </h1>
+            </div>
+          )}
         </div>
       </div>
-      <div className="">
-        <h1 className="text-center text-2xl font-bold my-8">FEEDBACK</h1>
 
-        {solutionFeedback && (
-          //console.log(JSON.parse(interview?.feedback).message)
-          <div className="my-8">
-            <div className="mb-6">
-              <h1 className="text-xl font-semibold mb-4">Message</h1>
-              <p>{solutionFeedback?.message}</p>
-            </div>
-            <div className="mb-6">
-              <h1 className="text-xl font-semibold mb-4">Correctness</h1>
-              <p>{solutionFeedback?.correctness}</p>
-            </div>
-            <div className="mb-6">
-              <h1 className="text-xl font-semibold mb-4">Approach</h1>
-              <p>{solutionFeedback?.approach}</p>
-            </div>
-            <div className="mb-6">
-              <h1 className="text-xl font-semibold mb-4">Efficiency</h1>
-              <p>{solutionFeedback?.efficiency}</p>
-            </div>
-            <div className="mb-6">
-              <h1 className="text-xl font-semibold mb-4">Code Quality</h1>
-              <p>{solutionFeedback?.code_quality}</p>
-            </div>
-            <div className="mb-6">
-              <h1 className="text-xl font-semibold mb-4">Optimization</h1>
-              <p>{solutionFeedback?.optimization}</p>
-            </div>
-            <div className="mb-20">
-              <h1 className="text-xl font-semibold mb-4">Overall Feedback</h1>
-              <p>{solutionFeedback?.overall_feedback}</p>
-            </div>
+      <div className="w-full bg-gray-300 rounded-xl mt-8 p-4">
+        <h1 className="font-bold">Correct Solution: </h1>
+        <div className="flex justify-between gap-6">
+          <div className=" bg-gray-200 p-4 border-[16px] border-gray-300 rounded-xl">
+            <FormatCode code={correctAnswer?.code} language="java" />
           </div>
-        )}
+
+          <div className="mt-2 flex">
+            <span className="font-bold ">Explanation: </span>
+            <span> {correctAnswer?.explanation}</span>
+          </div>
+        </div>
       </div>
       <Link href={"/dashboard"}>
         <Button className="my-8">Go to Dashboard</Button>

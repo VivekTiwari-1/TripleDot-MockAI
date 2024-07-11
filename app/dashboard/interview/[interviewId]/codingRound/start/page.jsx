@@ -23,6 +23,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+// -------- MAKE THIS PAGE RESIZABLE LIKE OTHER CODING PLATFORMS USING RESIZABLE COMPONENT OF SHADCN -------
+
 const page = ({ params }) => {
   const [language, setLanguage] = useState();
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
@@ -76,7 +78,7 @@ const page = ({ params }) => {
       .replace("```", "");
 
     const jsonMockResp = JSON.parse(mockJsonResp);
-    console.log(jsonMockResp);
+    //console.log(jsonMockResp);
 
     const resp = await db.insert(CodingFeedback).values({
       mockIdRef: params.interviewId,
@@ -126,7 +128,7 @@ const page = ({ params }) => {
                       Hint
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
+                  <DropdownMenuContent className="w-64 bg-neutral-800 border-neutral-500 text-neutral-400">
                     <DropdownMenuLabel>
                       {mockInterviewQuestion?.hint}
                     </DropdownMenuLabel>

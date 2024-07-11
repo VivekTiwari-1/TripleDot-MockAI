@@ -23,7 +23,7 @@ const AlgorithmRound = ({ params }) => {
     setInterviewData(result[0]);
   };
   return (
-    <div className="my-10 flex justify-between gap-10">
+    <div className="my-10 flex flex-col md:flex-row justify-between gap-10">
       <div>
         <h2 className="text-2xl font-bold">Let's Get Started!</h2>
         <div className="flex flex-col my-5 gap-5">
@@ -33,7 +33,7 @@ const AlgorithmRound = ({ params }) => {
               {interviewData.jobPosition}
             </h2>
             <h2 className="text-lg">
-              <strong>Programming Language: </strong> {interviewData.language}
+              <strong>Tech Stack: </strong> {interviewData.language}
             </h2>
             <h2 className="text-lg">
               <strong>Years of Experience: </strong>
@@ -63,7 +63,7 @@ const AlgorithmRound = ({ params }) => {
           </Link>
         </div>
       </div>
-      <div className="w-[60vw] ml-36 content-center">
+      <div className="w-full ml-36 content-center hidden md:flex">
         <div className="bg-slate-200 w-[70%] h-[60vh]"></div>
       </div>
     </div>

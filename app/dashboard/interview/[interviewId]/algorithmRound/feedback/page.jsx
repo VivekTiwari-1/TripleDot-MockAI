@@ -2,16 +2,26 @@
 
 import React, { useEffect, useState } from "react";
 import { db } from "@/utils/db";
-import { AlgoInterview } from "@/utils/schema";
+import { AlgoFeedback } from "@/utils/schema";
 import { eq } from "drizzle-orm";
-import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronsUpDown } from "lucide-react";
+
 const page = ({ params }) => {
-  const [interviewData, setInterviewData] = useState([]);
+  const [interviewData, setInterviewData] = useState();
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
+  const [feedback, setFeedback] = useState();
+  const [correctAnswer, setCorrectAnswer] = useState();
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     GetInterviewDetails();
   }, []);
@@ -20,22 +30,20 @@ const page = ({ params }) => {
     setLoading(true);
     const result = await db
       .select()
-      .from(AlgoInterview)
-      .where(eq(AlgoInterview.mockId, params.interviewId));
+      .from(AlgoFeedback)
+      .where(eq(AlgoFeedback.mockIdRef, params.interviewId));
 
-    const jsonMockResp = JSON.parse(result[0].jsonMockResp);
-    //console.log(jsonMockResp.question);
-    setMockInterviewQuestion(jsonMockResp);
-    console.log(jsonMockResp);
     setInterviewData(result[0]);
+    setMockInterviewQuestion(JSON.parse(result[0].question));
+    setCorrectAnswer(JSON.parse(result[0].correctAns));
+    setFeedback(JSON.parse(result[0].feedback));
     setLoading(false);
   };
   return (
     <div className="py-8">
       <h2 className="text-3xl font-bold text-green-500">Congratulations!</h2>
-      <h2 className="font-bold text-2xl">Here is your feedback</h2>
 
-      <h2 className="text-sm text-gray-500">
+      <h2 className="text-md text-gray-500 mt-2 mb-12">
         Find below interview question with correct answer, your answer and
         feedback for improvement
       </h2>
@@ -49,31 +57,97 @@ const page = ({ params }) => {
         </div>
       ) : (
         <div>
-          <div className="flex gap-6 bg-slate-300">
-            <div>
-              <h1 className="text-xl font-bold">Scenario</h1>
-              <h2 className="">{mockInterviewQuestion?.question?.scenario}</h2>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold">Problem</h1>
-              <h2>{mockInterviewQuestion?.question?.problem}</h2>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold">Requirements</h1>
-              <h2>{mockInterviewQuestion?.question?.requirements}</h2>
-            </div>
+          <div className="">
+            <Collapsible className="mt-4">
+              <CollapsibleTrigger className="p-2 bg-secondary rounded my-2 flex justify-between w-full">
+                Question <ChevronsUpDown className="h-5 w-5 ml-4" />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-gray-600 p-2 border rounded-lg text-sm">
+                    <strong>Scenario: </strong>
+                    {mockInterviewQuestion?.scenario}
+                  </h2>
+                  <h2 className="text-gray-600 p-2 border rounded-lg bg-gray-100 text-sm">
+                    <strong>Problem: </strong>
+                    {mockInterviewQuestion?.problem}
+                  </h2>
+                  <h2 className="text-gray-600 p-2 border rounded-lg bg-gray-100 text-sm">
+                    <strong>Requirements: </strong>
+                    {mockInterviewQuestion?.requirements}
+                  </h2>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
-          <div className="my-8 w-[50%]">
-            <h1 className="text-xl font-bold">Solution: </h1>
-            <p>{mockInterviewQuestion?.answer?.algorithm}</p>
+
+          <div className="">
+            <Collapsible className="mt-4">
+              <CollapsibleTrigger className="p-2 bg-secondary rounded my-2 flex justify-between w-full">
+                Correct Solution <ChevronsUpDown className="h-5 w-5 ml-4" />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-gray-600 p-2 border rounded-lg text-sm">
+                    <strong>Solution: </strong>
+                    {correctAnswer?.algorithm}
+                  </h2>
+                  <h2 className="text-gray-600 p-2 border rounded-lg bg-gray-100 text-sm">
+                    <strong>Explanation: </strong>
+                    {correctAnswer?.explanation}
+                  </h2>
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
           </div>
-          <div className="w-[50%]">
-            <h1 className="text-xl font-bold">Explanation: </h1>
-            <p>{mockInterviewQuestion?.answer?.explanation}</p>
+
+          <div className="">
+            <Collapsible className="mt-4">
+              <CollapsibleTrigger className="p-2 bg-secondary rounded my-2 flex justify-between w-full">
+                Your Submitted Solution{" "}
+                <ChevronsUpDown className="h-5 w-5 ml-4" />
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <h2 className="text-gray-600 p-2 border rounded-lg text-sm">
+                  <strong>Solution: </strong>
+                  {interviewData?.userAns}
+                </h2>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+
+          <div className="w-full bg-gray-200 p-8 rounded-lg my-12">
+            <h1 className="text-xl font-semibold mb-4">
+              Your Personalized feedback
+            </h1>
+            <h2 className="text-gray-600 p-2 border rounded-lg text-md my-6">
+              <strong>Rating: </strong>
+              {feedback?.rating}/10
+            </h2>
+            <h2 className="text-gray-600 p-2 border rounded-lg text-sm mt-2">
+              <strong>Correctness: </strong>
+              {feedback?.correctness}
+            </h2>
+            <h2 className="text-gray-600 p-2 border rounded-lg text-sm mt-2">
+              <strong>Approach: </strong>
+              {feedback?.approach}
+            </h2>
+            <h2 className="text-gray-600 p-2 border rounded-lg text-sm mt-2">
+              <strong>Efficiency: </strong>
+              {feedback?.efficiency}
+            </h2>
+            <h2 className="text-gray-600 p-2 border rounded-lg text-sm mt-2">
+              <strong>Optimization: </strong>
+              {feedback?.optimization}
+            </h2>
+            <h2 className="text-gray-600 p-2 border rounded-lg text-sm mt-2">
+              <strong>Scalability: </strong>
+              {feedback?.scalability}
+            </h2>
           </div>
 
           <Link href={"/dashboard"}>
-            <Button className="my-8">Go to Dashboard</Button>
+            <Button className="">Go to Dashboard</Button>
           </Link>
         </div>
       )}

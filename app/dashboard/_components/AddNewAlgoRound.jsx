@@ -43,7 +43,7 @@ const AddNewAlgoRound = () => {
     const InputPrompt =
       "Job position:" +
       jobPosition +
-      ", Coding language:" +
+      ", Tech Stack:" +
       language +
       ", Years of experience:" +
       jobExperience +
