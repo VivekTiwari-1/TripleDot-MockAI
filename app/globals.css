@@ -70,6 +70,10 @@
   * {
     @apply border-border;
   }
+
+  *::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
   body {
     @apply bg-background text-foreground;
   }
