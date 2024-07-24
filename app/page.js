@@ -30,6 +30,7 @@ export default function Home() {
 
   return (
     <div className="bg-black text-white px-28 py-4 flex items-center flex-col">
+      {/* NAVBAR SECTION */}
       <div className="Navbar w-full h-fit md:w-[75%] flex justify-between items-center border-gray-700 rounded-full border px-12 py-5">
         <h1 className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600">
           BRANDING
@@ -87,7 +88,7 @@ export default function Home() {
       </div>
 
       {/* HOW IT WORKS? */}
-      <div className="h-[85vh] w-full flex flex-col items-center bg-gradient-to-t from-gray-950 rounded-3xl px-24">
+      <div className="h-[85vh] w-full flex flex-col items-center bg-gradient-to-t from-gray-950 rounded-3xl px-24 mt-16">
         <h1 className="text-3xl font-bold mt-16 text-gray-400">
           <p>How it Works?</p>
           <p className="h-[2px] w-48 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 mt-2"></p>

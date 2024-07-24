@@ -8,17 +8,21 @@ import QuestionsSection from "./_components/QuestionsSection";
 import RecordAnswerSection from "./_components/RecordAnswerSection";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Loader from "@/app/dashboard/_components/Loader";
 
 const StartInterview = ({ params }) => {
   const [interviewData, setInterviewData] = useState();
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
   const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     GetInterviewDetails();
   }, []);
 
   const GetInterviewDetails = async () => {
+    setLoading(true);
     const result = await db
       .select()
       .from(MockInterview)
@@ -28,50 +32,62 @@ const StartInterview = ({ params }) => {
     setMockInterviewQuestion(jsonMockResp);
     setInterviewData(result[0]);
 
-    //console.log(jsonMockResp[0].answer);
+    setLoading(false);
   };
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        {/* Questions */}
-        <QuestionsSection
-          mockInterviewQuestion={mockInterviewQuestion}
-          activeQuestionIndex={activeQuestionIndex}
-        />
-        {/* Video/Audio recordings */}
-        <RecordAnswerSection
-          mockInterviewQuestion={mockInterviewQuestion}
-          activeQuestionIndex={activeQuestionIndex}
-          interviewData={interviewData}
-        />
-      </div>
-      <div className="flex justify-end gap-6">
-        {activeQuestionIndex > 0 && (
-          <Button
-            onClick={() => setActiveQuestionIndex(activeQuestionIndex - 1)}
-          >
-            Previous Question
-          </Button>
-        )}
-        {activeQuestionIndex != mockInterviewQuestion?.length - 1 && (
-          <Button
-            onClick={() => setActiveQuestionIndex(activeQuestionIndex + 1)}
-          >
-            Next Question
-          </Button>
-        )}
-        {activeQuestionIndex === mockInterviewQuestion?.length - 1 && (
-          <Link
-            href={
-              "/dashboard/interview/" +
-              interviewData?.mockId +
-              "/technicalRound/feedback"
-            }
-          >
-            <Button>End Interview</Button>
-          </Link>
-        )}
-      </div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* Questions */}
+            <QuestionsSection
+              mockInterviewQuestion={mockInterviewQuestion}
+              activeQuestionIndex={activeQuestionIndex}
+            />
+            {/* Video/Audio recordings */}
+            <div>
+              <RecordAnswerSection
+                mockInterviewQuestion={mockInterviewQuestion}
+                activeQuestionIndex={activeQuestionIndex}
+                interviewData={interviewData}
+              />
+              <div className="flex justify-end gap-6">
+                {activeQuestionIndex > 0 && (
+                  <Button
+                    onClick={() =>
+                      setActiveQuestionIndex(activeQuestionIndex - 1)
+                    }
+                  >
+                    Previous Question
+                  </Button>
+                )}
+                {activeQuestionIndex != mockInterviewQuestion?.length - 1 && (
+                  <Button
+                    onClick={() =>
+                      setActiveQuestionIndex(activeQuestionIndex + 1)
+                    }
+                  >
+                    Next Question
+                  </Button>
+                )}
+                {activeQuestionIndex === mockInterviewQuestion?.length - 1 && (
+                  <Link
+                    href={
+                      "/dashboard/interview/" +
+                      interviewData?.mockId +
+                      "/technicalRound/feedback"
+                    }
+                  >
+                    <Button>End Interview</Button>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

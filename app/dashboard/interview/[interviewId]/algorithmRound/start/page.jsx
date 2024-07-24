@@ -10,14 +10,17 @@ import { chatSession } from "@/utils/GeminiAIModel";
 import moment from "moment";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "@/components/ui/use-toast";
-import { CircleCheckBig } from "lucide-react";
+import { CircleCheckBig, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Timer from "../../codingRound/_component/Timer";
+import Loader from "@/app/dashboard/_components/Loader";
 
 const page = ({ params }) => {
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
-  const [userSolution, setUserSolution] = useState();
-  const [loading, setLoading] = useState();
+  const [userSolution, setUserSolution] = useState("");
+
+  const [processing, setProcessing] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const user = useUser();
   const { router } = useRouter;
@@ -27,6 +30,7 @@ const page = ({ params }) => {
   }, []);
 
   const GetInterviewDetails = async () => {
+    setLoading(true);
     const result = await db
       .select()
       .from(AlgoInterview)
@@ -35,11 +39,21 @@ const page = ({ params }) => {
     const jsonMockResp = JSON.parse(result[0].jsonMockResp);
     //console.log(jsonMockResp.question);
     setMockInterviewQuestion(jsonMockResp);
+
+    setLoading(false);
   };
 
   const onSubmit = async () => {
-    setLoading(true);
+    setProcessing(true);
 
+    if (userSolution.length < 10) {
+      toast({
+        description: "Submission Failed!, Answer is too short!!",
+        action: <X className="text-red-500" />,
+      });
+      setProcessing(false);
+      return;
+    }
     const feedbackPrompt = `"This is an algorithm question - " Scenario: ${mockInterviewQuestion?.question?.scenario} Problem: ${mockInterviewQuestion?.question?.problem} Requirements: ${mockInterviewQuestion?.question?.requirements} " and this is the solution that I have written - " ${userSolution} " - Based on this answer, please provide me a detailed feedback like addressing my approach, efficiency and scalability of my solution, etc in JSON format without any extra space in between with these fields - correctness, approach, efficiency, optimization, scalability, rating(out of 10)
 "`;
 
@@ -63,7 +77,8 @@ const page = ({ params }) => {
       createdAt: moment().format("DD-MM-YYYY"),
     });
 
-    console.log(resp);
+    setProcessing(false);
+
     if (resp) {
       toast({
         description: "Submitted successfully",
@@ -78,8 +93,6 @@ const page = ({ params }) => {
           "/algorithmRound/feedback"
       );
     }, 2000);
-
-    setLoading(false);
   };
 
   const HandleTimeUp = (value) => {
@@ -90,44 +103,50 @@ const page = ({ params }) => {
   };
 
   return (
-    <div className="flex justify-between flex-col lg:flex-row gap-8 py-8 lg:w-[90vw] lg:-ml-12">
-      <div className="flex flex-col gap-8 pr-12 w-full">
-        <h1 className="text-lg font-bold text-gray-600 my-10">
-          Design an algorithm based on the following Information
-        </h1>
-        <div>
-          <h1 className="text-md font-semibold">Scenario</h1>
-          <h2 className="">{mockInterviewQuestion?.question?.scenario}</h2>
-        </div>
-        <div>
-          <h1 className="text-md font-semibold">Problem</h1>
-          <h2>{mockInterviewQuestion?.question?.problem}</h2>
-        </div>
-        <div>
-          <h1 className="text-md font-semibold">Requirements</h1>
-          <h2>{mockInterviewQuestion?.question?.requirements}</h2>
-        </div>
-      </div>
+    <div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="flex justify-between flex-col lg:flex-row gap-8 py-8 lg:w-[90vw] lg:-ml-12">
+          <div className="flex flex-col gap-8 pr-12 w-full">
+            <h1 className="text-lg font-bold text-gray-600 my-10">
+              Design an algorithm based on the following Information
+            </h1>
+            <div>
+              <h1 className="text-md font-semibold">Scenario</h1>
+              <h2 className="">{mockInterviewQuestion?.question?.scenario}</h2>
+            </div>
+            <div>
+              <h1 className="text-md font-semibold">Problem</h1>
+              <h2>{mockInterviewQuestion?.question?.problem}</h2>
+            </div>
+            <div>
+              <h1 className="text-md font-semibold">Requirements</h1>
+              <h2>{mockInterviewQuestion?.question?.requirements}</h2>
+            </div>
+          </div>
 
-      <div className="w-full">
-        <div className="flex justify-end">
-          <Timer onTimeUp={HandleTimeUp} />
-        </div>
-        <div className="h-[60vh] rounded-lg shadow-lg p-4">
-          <Textarea
-            placeholder="Write your algorithm here"
-            className="h-full w-full"
-            required
-            onChange={(event) => setUserSolution(event.target.value)}
-          />
-        </div>
+          <div className="w-full">
+            <div className="flex justify-end">
+              <Timer onTimeUp={HandleTimeUp} />
+            </div>
+            <div className="h-[60vh] rounded-lg shadow-lg p-4">
+              <Textarea
+                placeholder="Write your algorithm here"
+                className="h-full w-full"
+                required
+                onChange={(event) => setUserSolution(event.target.value)}
+              />
+            </div>
 
-        <div className="flex justify-end">
-          <Button className="mt-8" onClick={() => onSubmit()}>
-            Submit Algo
-          </Button>
+            <div className="flex justify-end">
+              <Button className="mt-8" onClick={() => onSubmit()}>
+                Submit Algo
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

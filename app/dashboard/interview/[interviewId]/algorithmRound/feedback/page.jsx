@@ -14,6 +14,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ChevronsUpDown } from "lucide-react";
+import Loader from "@/app/dashboard/_components/Loader";
 
 const page = ({ params }) => {
   const [interviewData, setInterviewData] = useState();
@@ -48,13 +49,7 @@ const page = ({ params }) => {
         feedback for improvement
       </h2>
       {loading && loading ? (
-        <div className="flex flex-col space-y-3">
-          <Skeleton className="h-[125px] w-[70vw] rounded-xl bg-gray-400" />
-          <div className="space-y-2">
-            <Skeleton className="h-[20vh] w-[60vw]" />
-            <Skeleton className="h-[10vh] w-[50vw]" />
-          </div>
-        </div>
+        <Loader />
       ) : (
         <div>
           <div className="">

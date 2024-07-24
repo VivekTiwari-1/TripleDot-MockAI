@@ -22,6 +22,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Loader from "@/app/dashboard/_components/Loader";
 
 // -------- MAKE THIS PAGE RESIZABLE LIKE OTHER CODING PLATFORMS USING RESIZABLE COMPONENT OF SHADCN -------
 
@@ -30,7 +31,8 @@ const page = ({ params }) => {
   const [mockInterviewQuestion, setMockInterviewQuestion] = useState();
   const [mockInterviewAnswer, setMockInterviewAnswer] = useState();
   const [userSolution, setUserSolution] = useState();
-  const [loading, setLoading] = useState();
+
+  const [loading, setLoading] = useState(true);
 
   const { user } = useUser();
   const router = useRouter();
@@ -40,6 +42,7 @@ const page = ({ params }) => {
   }, []);
 
   const GetInterviewDetails = async () => {
+    setLoading(true);
     const result = await db
       .select()
       .from(CodingInterview)
@@ -50,6 +53,8 @@ const page = ({ params }) => {
     setMockInterviewQuestion(jsonMockResp.question);
     setMockInterviewAnswer(jsonMockResp.code_solution);
     setLanguage(result[0].language);
+
+    setLoading(false);
   };
 
   const handleValueChange = (value) => {
@@ -108,111 +113,115 @@ const page = ({ params }) => {
   };
 
   return (
-    <div className="-mx-36 bg-neutral-900 text-white">
-      <div className="">
-        <div className="flex justify-between gap-8">
-          <div className="m-1 max-w-[45vw] pr-4 pt-8 pl-12">
-            <h1 className=" text-xl font-semibold">
-              {mockInterviewQuestion?.title}
-            </h1>
-            <div className="mt-4 text-sm flex items-center gap-16">
-              <h3 className=" text-neutral-500">
-                <strong>Level: </strong>
-                {mockInterviewQuestion?.difficulty}
-              </h3>
-              <div className="flex ">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button className="flex text-neutral-500">
-                      <Lightbulb className="h-4" />
-                      Hint
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-64 bg-neutral-800 border-neutral-500 text-neutral-400">
-                    <DropdownMenuLabel>
-                      {mockInterviewQuestion?.hint}
-                    </DropdownMenuLabel>
-                  </DropdownMenuContent>
-                </DropdownMenu>
+    <div>
+      {loading ? (
+        <Loader />
+      ) : (
+        <div className="-mx-36 bg-neutral-900 text-white">
+          <div className="flex justify-between gap-8">
+            <div className="m-1 max-w-[45vw] pr-4 pt-8 pl-12">
+              <h1 className=" text-xl font-semibold">
+                {mockInterviewQuestion?.title}
+              </h1>
+              <div className="mt-4 text-sm flex items-center gap-16">
+                <h3 className=" text-neutral-500">
+                  <strong>Level: </strong>
+                  {mockInterviewQuestion?.difficulty}
+                </h3>
+                <div className="flex ">
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button className="flex text-neutral-500">
+                        <Lightbulb className="h-4" />
+                        Hint
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-64 bg-neutral-800 border-neutral-500 text-neutral-400">
+                      <DropdownMenuLabel>
+                        {mockInterviewQuestion?.hint}
+                      </DropdownMenuLabel>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
               </div>
-            </div>
-            <p className="h-[1px] bg-neutral-600 my-5"></p>
-            <div className="text-neutral-400">
-              <div className="">
-                {/* <h1 className="text-xl font-semibold">Description</h1> */}
-                <p className="">{mockInterviewQuestion?.description}</p>
-              </div>
-              <div className=""></div>
-              <div className="mt-8 ">
-                <strong>Input Format</strong>
-                <p className="">{mockInterviewQuestion?.input_format}</p>
-              </div>
-              <div className="mt-8 ">
-                <strong>Output Format</strong>
-                <p className="">{mockInterviewQuestion?.output_format}</p>
-              </div>
+              <p className="h-[1px] bg-neutral-600 my-5"></p>
+              <div className="text-neutral-400">
+                <div className="">
+                  {/* <h1 className="text-xl font-semibold">Description</h1> */}
+                  <p className="">{mockInterviewQuestion?.description}</p>
+                </div>
+                <div className=""></div>
+                <div className="mt-8 ">
+                  <strong>Input Format</strong>
+                  <p className="">{mockInterviewQuestion?.input_format}</p>
+                </div>
+                <div className="mt-8 ">
+                  <strong>Output Format</strong>
+                  <p className="">{mockInterviewQuestion?.output_format}</p>
+                </div>
 
-              <div className="mt-8">
-                <h1 className="text-lg font-semibold mb-4 ">Examples</h1>
-                <div className="bg-neutral-800 border border-gray-500 rounded-md p-3">
-                  <p className="">
-                    <strong>Input: </strong>
-                    {mockInterviewQuestion?.sample_input[0]}
-                  </p>
-                  <p className="">
-                    <strong>Output: </strong>
-                    {mockInterviewQuestion?.sample_output[0]}
-                  </p>
+                <div className="mt-8">
+                  <h1 className="text-lg font-semibold mb-4 ">Examples</h1>
+                  <div className="bg-neutral-800 border border-gray-500 rounded-md p-3">
+                    <p className="">
+                      <strong>Input: </strong>
+                      {mockInterviewQuestion?.sample_input[0]}
+                    </p>
+                    <p className="">
+                      <strong>Output: </strong>
+                      {mockInterviewQuestion?.sample_output[0]}
+                    </p>
+                  </div>
+                  <div className="mt-8 bg-neutral-800 border border-gray-500 rounded-md p-3">
+                    <p className="">
+                      <strong>Input: </strong>
+                      {mockInterviewQuestion?.sample_input[1]}
+                    </p>
+                    <p className="">
+                      <strong>Output: </strong>
+                      {mockInterviewQuestion?.sample_output[1]}
+                    </p>
+                  </div>
                 </div>
-                <div className="mt-8 bg-neutral-800 border border-gray-500 rounded-md p-3">
-                  <p className="">
-                    <strong>Input: </strong>
-                    {mockInterviewQuestion?.sample_input[1]}
-                  </p>
-                  <p className="">
-                    <strong>Output: </strong>
-                    {mockInterviewQuestion?.sample_output[1]}
-                  </p>
+                <div className="mt-8 ">
+                  <h1 className="text-lg font-semibold">Constraints</h1>
+                  <p className="">{mockInterviewQuestion?.constraints}</p>
                 </div>
+                <p className="mt-8">
+                  {" "}
+                  <span className="font-medium">Platform:</span>{" "}
+                  {mockInterviewQuestion?.platform}
+                </p>
               </div>
-              <div className="mt-8 ">
-                <h1 className="text-lg font-semibold">Constraints</h1>
-                <p className="">{mockInterviewQuestion?.constraints}</p>
+            </div>
+            <div className="fixed right-2 bg-neutral-800 px-8 pt-4 pb-8">
+              <div className="flex justify-between mb-4">
+                <h1 className="border border-neutral-600 rounded-lg px-4 h-6  text-neutral-500">
+                  {language?.toLowerCase()}
+                </h1>
+                <h1>
+                  <Timer onTimeUp={HandleTimeUp} />
+                </h1>
               </div>
-              <p className="mt-8">
-                {" "}
-                <span className="font-medium">Platform:</span>{" "}
-                {mockInterviewQuestion?.platform}
-              </p>
-            </div>
-          </div>
-          <div className="fixed right-2 bg-neutral-800 px-8 pt-4 pb-8">
-            <div className="flex justify-between mb-4">
-              <h1 className="border border-neutral-600 rounded-lg px-4 h-6  text-neutral-500">
-                {language?.toLowerCase()}
-              </h1>
-              <h1>
-                <Timer onTimeUp={HandleTimeUp} />
-              </h1>
-            </div>
-            <div className="">
-              {language && (
-                <CodeEditor
-                  onValueChange={handleValueChange}
-                  language={language.toLowerCase()}
-                />
+              <div className="">
+                {language && (
+                  <CodeEditor
+                    onValueChange={handleValueChange}
+                    language={language.toLowerCase()}
+                  />
+                )}
+              </div>
+              {userSolution && (
+                <div className="-mt-16 ">
+                  <Button className="mt-4" onClick={updateUserAnswer}>
+                    Submit Code
+                  </Button>
+                </div>
               )}
             </div>
-            {userSolution && (
-              <div className="-mt-16 ">
-                <Button className="mt-4" onClick={updateUserAnswer}>
-                  Submit Code
-                </Button>
-              </div>
-            )}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -21,8 +21,6 @@ import { UserAnswer } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 
-//http://localhost:3000/dashboard/interview/b099ef07-955a-4690-8e96-fed159d4a8da/start
-
 const RecordAnswerSection = ({
   mockInterviewQuestion,
   activeQuestionIndex,
@@ -117,20 +115,6 @@ const RecordAnswerSection = ({
     resetTranscript;
     setLoading(false);
   };
-
-  // useEffect(() => {
-  //   if (listening) {
-  //     SpeechRecognition.startListening({ continuous: true });
-  //   }
-  //   if (!listening) {
-  //     if (transcript?.length < 10) {
-  //       toast("Error while saving your answer, Please record again!!");
-  //       return;
-  //     }
-  //     setUserAnswer(transcript);
-  //     SpeechRecognition.startListening({ continuous: false });
-  //   }
-  // }, [listening]);
 
   return (
     <div>

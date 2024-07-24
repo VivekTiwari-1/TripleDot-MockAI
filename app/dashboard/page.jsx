@@ -6,6 +6,7 @@ import AddNewInterview from "./_components/AddNewInterview";
 import AlgoRoundList from "./_components/AlgoRoundList";
 import CodingRoundList from "./_components/CodingRoundList";
 import InterviewList from "./_components/InterviewList";
+import Loader from "./_components/Loader";
 
 const Dashboard = () => {
   return (
