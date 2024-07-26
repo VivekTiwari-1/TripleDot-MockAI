@@ -71,12 +71,15 @@ const Interview = ({ params }) => {
 
             <div>
               {webCamEnabled ? (
-                <Webcam
-                  onUserMedia={() => setWebCamEnabled(true)}
-                  onUserMediaError={() => setWebCamEnabled(false)}
-                  mirrored={true}
-                  style={{ height: 300, width: "100%" }}
-                />
+                <div className="bg-gray-700 py-4 rounded-xl">
+                  <Webcam
+                    onUserMedia={() => setWebCamEnabled(true)}
+                    onUserMediaError={() => setWebCamEnabled(false)}
+                    mirrored={true}
+                    style={{ height: 350, width: "100%" }}
+                    className="w-full"
+                  />
+                </div>
               ) : (
                 <div className="flex flex-col justify-center">
                   <WebcamIcon className="h-72 w-full my-7 p-20 bg-secondary rounded-lg border" />

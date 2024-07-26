@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { chatSession } from "@/utils/GeminiAIModel";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, Plus } from "lucide-react";
 import { MockInterview } from "@/utils/schema";
 import { v4 as uuidv4 } from "uuid";
 import { useUser } from "@clerk/nextjs";
@@ -86,9 +86,10 @@ const AddNewInterview = () => {
   return (
     <div>
       <div
-        className="p-10 border rounded-lg bg-secondary hover:scale-105 hover:shadow-sm cursor-pointer transition-all"
+        className="p-10 border rounded-lg bg-gradient-to-tr from-gray-100 via-gray-300 to-gray-100 hover:scale-105 hover:shadow-sm cursor-pointer transition-all"
         onClick={() => setOpenDialog(true)}
       >
+        {/* <Plus className="h-12 w-12" /> */}
         <h2 className="text-lg text-center">Add New</h2>
       </div>
       <Dialog open={openDialog}>

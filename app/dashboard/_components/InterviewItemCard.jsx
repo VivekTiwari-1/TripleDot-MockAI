@@ -4,7 +4,7 @@ import React from "react";
 
 const InterviewItemCard = ({ interview, type }) => {
   return (
-    <div className="border shadow-sm rounded-lg p-3">
+    <div className="border shadow-sm rounded-lg p-3 hover:shadow-xl hover:shadow-gray-600 ">
       <h2 className="font-bold text-xl text-primary">
         {interview?.jobPosition}
       </h2>

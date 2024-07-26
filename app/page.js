@@ -37,8 +37,12 @@ export default function Home() {
         </h1>
         <ul className="flex gap-6 items-center text-gray-400">
           <li className="cursor-pointer hover:text-gray-300">Pricing</li>
-          <li className="cursor-pointer hover:text-gray-300">Company</li>
-          <li className="cursor-pointer hover:text-gray-300">How it Works?</li>
+          <li className="cursor-pointer hover:text-gray-300">Community</li>
+          <Link href="/questionbank">
+            <li className="cursor-pointer hover:text-gray-300">
+              Question Bank
+            </li>
+          </Link>
         </ul>
         {/* <div className="h-10 w-10 flex justify-center items-center border-2 border-gray-800 rounded-full">
           <UserButton />

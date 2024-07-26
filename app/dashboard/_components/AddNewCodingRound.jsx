@@ -89,7 +89,7 @@ const AddNewCodingRound = () => {
   return (
     <div>
       <div
-        className="p-10 border rounded-lg bg-secondary hover:scale-105 hover:shadow-sm cursor-pointer transition-all "
+        className="p-10 border rounded-lg bg-gradient-to-tr from-gray-100 via-gray-300 to-gray-100 hover:scale-105 hover:shadow-sm cursor-pointer transition-all "
         onClick={() => setOpenDialog2(true)}
       >
         <h2 className="text-lg text-center">Add New Coding Round</h2>

@@ -2,18 +2,8 @@
 
 import "regenerator-runtime/runtime";
 import { Button } from "@/components/ui/button";
-import {
-  CircleCheckBig,
-  CircleX,
-  Mic,
-  StopCircle,
-  WebcamIcon,
-} from "lucide-react";
-import React, { useEffect, useState } from "react";
-import Webcam from "react-webcam";
-import SpeechRecognition, {
-  useSpeechRecognition,
-} from "react-speech-recognition";
+import { CircleCheckBig, LoaderCircle, Mic, StopCircle, X } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "@/components/ui/use-toast";
 import { chatSession } from "@/utils/GeminiAIModel";
 import { db } from "@/utils/db";
@@ -26,45 +16,53 @@ const RecordAnswerSection = ({
   activeQuestionIndex,
   interviewData,
 }) => {
-  const {
-    transcript,
-    listening,
-    resetTranscript,
-    browserSupportsSpeechRecognition,
-    browserSupportsContinuousListening,
-  } = useSpeechRecognition();
-
   const [userAnswer, setUserAnswer] = useState("");
   const [loading, setLoading] = useState();
+  const [listening, setListening] = useState();
   const { user } = useUser();
 
-  // if (!browserSupportsSpeechRecognition) {
-  //   return <span>Browser doesn't support speech recognition.</span>;
-  // }
+  // NEW SECTION STARTS HERE
+  const recognition = useRef(null);
 
   useEffect(() => {
-    if (!listening && userAnswer.length > 10) {
-      updateUserAnswer();
+    // Initialize Speech Recognition
+    if (window.SpeechRecognition || window.webkitSpeechRecognition) {
+      const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition.current = new SpeechRecognition();
+      recognition.current.continuous = true;
+      recognition.current.interimResults = true;
+      recognition.current.onresult = (event) => {
+        let interimTranscript = "";
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          if (event.results[i].isFinal) {
+            interimTranscript += event.results[i][0].transcript;
+          }
+        }
+
+        setUserAnswer((prev) => prev + interimTranscript);
+      };
+    } else {
+      alert("Speech Recognition API not supported in this browser.");
     }
-  }, [userAnswer]);
+  }, []);
 
   const startStopRecording = async () => {
-    if (listening) {
-      setLoading(true);
-
-      SpeechRecognition.startListening({ continuous: false });
-
-      if (transcript?.length < 10) {
+    if (!listening) {
+      try {
+        recognition.current.start();
+        setUserAnswer("");
+        setListening(true);
+      } catch (error) {
         toast({
-          description: "Error while saving your answer, Please record again!!",
-          action: <CircleX className="text-red-600 text-xl" />,
+          description: "Wait a second and try again!!",
+          action: <X className="text-red-600" />,
         });
-        resetTranscript;
-        return;
       }
-      setUserAnswer(transcript);
-    } else {
-      SpeechRecognition.startListening({ continuous: true });
+    }
+    if (listening) {
+      recognition.current.stop();
+      setListening(false);
     }
   };
 
@@ -110,37 +108,47 @@ const RecordAnswerSection = ({
         action: <CircleCheckBig className="text-green-600" />,
       });
       setUserAnswer("");
-      resetTranscript;
+      //resetTranscript;
     }
-    resetTranscript;
+    //resetTranscript;
     setLoading(false);
   };
 
   return (
     <div>
-      <div className="flex flex-col justify-center items-center rounded-lg mt-16 p-5 bg-black text-white">
-        <WebcamIcon height={300} width={300} className="absolute" />
-        <Webcam
-          mirrored={true}
-          style={{ height: 300, width: "100%", zIndex: 10 }}
-        />
+      <div className="flex justify-between ml-16">
+        <Button
+          variant="outline"
+          className="mt-10"
+          onClick={startStopRecording}
+        >
+          {listening ? (
+            <h2 className="flex gap-3 text-red-700 animate-pulse items-center">
+              <StopCircle />
+              Stop Recording
+            </h2>
+          ) : (
+            <h2 className="flex gap-3 items-center">
+              <Mic />
+              Record Answer
+            </h2>
+          )}
+        </Button>
+
+        <Button className="m-10" onClick={updateUserAnswer} disabled={loading}>
+          {loading ? (
+            <>
+              <LoaderCircle className="animate-spin" />
+              Saving...
+            </>
+          ) : (
+            "Save Answer"
+          )}
+        </Button>
       </div>
-      <Button variant="outline" className="mt-10" onClick={startStopRecording}>
-        {listening ? (
-          <h2 className="flex gap-3 text-red-700 animate-pulse items-center">
-            <StopCircle />
-            Stop Recording
-          </h2>
-        ) : (
-          <h2 className="flex gap-3 items-center">
-            <Mic />
-            Record Answer
-          </h2>
-        )}
-      </Button>
 
       <div>
-        <p className="m-10">{transcript}</p>
+        <p className="m-10">{userAnswer}</p>
       </div>
     </div>
   );
