@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const Timer = ({ initialMinutes = 20, initialSeconds = 0, onTimeUp }) => {
+const Timer = ({ initialMinutes, initialSeconds, onTimeUp }) => {
   const [minutes, setMinutes] = useState(initialMinutes);
   const [seconds, setSeconds] = useState(initialSeconds);
 
@@ -29,9 +29,9 @@ const Timer = ({ initialMinutes = 20, initialSeconds = 0, onTimeUp }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="text-2xl font-bold flex items-center gap-1">
-        <span className="text-sm text-gray-500">Time remaining: </span>
-        <p className={`${minutes === 0 && seconds < 60 && "text-red-600"}`}>
+      <div className="text-4xl font-bold flex items-center flex-col gap-1">
+        <span className="text-sm text-gray-500">Time Left: </span>
+        <p>
           {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
         </p>
       </div>

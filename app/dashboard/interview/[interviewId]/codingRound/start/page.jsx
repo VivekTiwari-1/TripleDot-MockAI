@@ -200,7 +200,11 @@ const page = ({ params }) => {
                   {language?.toLowerCase()}
                 </h1>
                 <h1>
-                  <Timer onTimeUp={HandleTimeUp} />
+                  <Timer
+                    initialMinutes={20}
+                    initialSeconds={0}
+                    onTimeUp={HandleTimeUp}
+                  />
                 </h1>
               </div>
               <div className="">

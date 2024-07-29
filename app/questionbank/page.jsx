@@ -13,10 +13,10 @@ const page = () => {
   const [loading, setLoading] = useState();
 
   useEffect(() => {
-    GetFeedback();
+    GetQuestions();
   }, []);
 
-  const GetFeedback = async () => {
+  const GetQuestions = async () => {
     setLoading(true);
     const result = await db
       .select()

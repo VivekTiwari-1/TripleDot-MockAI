@@ -1,4 +1,4 @@
-import { pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
+import { pgTable, serial, text, varchar, jsonb } from "drizzle-orm/pg-core";
 
 export const MockInterview = pgTable("mockInterview", {
   id: serial("id").primaryKey(),
@@ -21,6 +21,26 @@ export const UserAnswer = pgTable("userAnswer", {
   rating: varchar("rating"),
   userEmail: varchar("userEmail"),
   createdAt: varchar("createdAt"),
+});
+
+export const ObjectiveMock = pgTable("objectiveMock", {
+  id: serial("id").primaryKey(),
+  jsonMockResp: text("jsonMockResp").notNull(),
+  techStack: varchar("techStack").notNull(),
+  level: varchar("level").notNull(),
+  keyword: varchar("keyword"),
+  createdBy: varchar("createdBy").notNull(),
+  createdAt: varchar("createdAt").notNull(),
+  mockId: varchar("mockId").notNull(),
+});
+
+export const ObjectiveFeedback = pgTable("objectiveFeedback", {
+  id: serial("id").primaryKey(),
+  mockIdRef: varchar("mockId").notNull(),
+  jsonMockResp: text("jsonMockResp").notNull(),
+  userAnswer: jsonb("userAnswer").notNull(),
+  userEmail: varchar("createdBy").notNull(),
+  createdAt: varchar("createdAt").notNull(),
 });
 
 export const AlgoInterview = pgTable("algoInterview", {
