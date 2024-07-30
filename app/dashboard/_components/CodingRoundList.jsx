@@ -5,7 +5,8 @@ import { CodingInterview } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { desc, eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
-import InterviewItemCard from "./InterviewItemCard";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const CodingRoundList = () => {
   const { user } = useUser();
@@ -42,11 +43,44 @@ const CodingRoundList = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-7">
             {interviewList &&
               interviewList.map((interview, index) => (
-                <InterviewItemCard
-                  interview={interview}
-                  key={index}
-                  type="codingRound"
-                />
+                <div className="border shadow-sm rounded-lg p-3 hover:shadow-xl hover:shadow-gray-600 ">
+                  <h2 className="font-bold text-xl text-primary">
+                    {interview?.jobPosition}
+                  </h2>
+                  <h2 className="font-sm text-gray-600 my-3">
+                    Years of Experience: {interview?.jobExperience}
+                  </h2>
+                  <h2 className="text-xs text-gray-400">
+                    Created At: {interview?.createdAt}
+                  </h2>
+
+                  <div className="flex justify-between mt-2 gap-4">
+                    <Link
+                      href={
+                        "/dashboard/interview/" +
+                        interview?.mockId +
+                        "/codingRound/feedback"
+                      }
+                      className="w-full"
+                    >
+                      <Button size="sm" variant="outline" className="w-full">
+                        Feedback
+                      </Button>
+                    </Link>
+                    <Link
+                      href={
+                        "/dashboard/interview/" +
+                        interview?.mockId +
+                        "/codingRound"
+                      }
+                      className="w-full"
+                    >
+                      <Button size="sm" className="w-full">
+                        Start
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               ))}
           </div>
         </div>

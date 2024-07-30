@@ -127,7 +127,7 @@ const Feedback = ({ params }) => {
                               {item.userAns}
                             </h2>
                             <h2 className="text-gray-600 p-2 border rounded-lg bg-gray-100 text-sm">
-                              <strong>Correct answer: </strong>
+                              <strong>Expected answer: </strong>
                               {item.correctAns}
                             </h2>
                             <h2 className="text-gray-600 p-2 border rounded-lg bg-gray-100 text-sm">

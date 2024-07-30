@@ -112,7 +112,7 @@ const AddNewInterview = () => {
                     </label>
                     <Input
                       className="mt-2"
-                      placeholder="Ex. Full Stack Developer"
+                      placeholder="Ex. Software Developer"
                       required
                       onChange={(event) => setJobPosition(event.target.value)}
                     />
@@ -123,7 +123,7 @@ const AddNewInterview = () => {
                     </label>
                     <Textarea
                       className="mt-2"
-                      placeholder="Ex. React, Angular, NodeJs, MySql, etc."
+                      placeholder="Ex. Tech stacks(React), Behavioral questions, Situational Judgement questions"
                       required
                       onChange={(event) => setJobDesc(event.target.value)}
                     />

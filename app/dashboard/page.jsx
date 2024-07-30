@@ -25,9 +25,9 @@ const Dashboard = () => {
 
       {/* Previous Interview Lists */}
       <InterviewList />
-      <ObjectiveTestList />
       <CodingRoundList />
       <AlgoRoundList />
+      <ObjectiveTestList />
     </div>
   );
 };

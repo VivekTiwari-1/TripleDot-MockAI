@@ -42,11 +42,7 @@ const InterviewList = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-7">
           {interviewList &&
             interviewList.map((interview, index) => (
-              <InterviewItemCard
-                interview={interview}
-                key={index}
-                type="technicalRound"
-              />
+              <InterviewItemCard interview={interview} key={index} />
             ))}
         </div>
       )}

@@ -54,7 +54,7 @@ const page = () => {
             className={`cursor-pointer ${index == 2 ? "text-gray-500" : ""}`}
             onClick={() => setIndex(2)}
           >
-            Coding
+            Objective
           </li>
           <li
             className={`cursor-pointer ${index == 3 ? "text-gray-500" : ""}`}
@@ -66,7 +66,7 @@ const page = () => {
             className={`cursor-pointer ${index == 4 ? "text-gray-500" : ""}`}
             onClick={() => setIndex(4)}
           >
-            General
+            Coding
           </li>
         </ul>
       </div>
@@ -128,7 +128,7 @@ const page = () => {
           )}
           {index == 4 ? (
             <div className="bg-black text-gray-700 h-[83vh] w-full flex justify-center items-center">
-              Sorry for the incovinience, General Questions will be added soon!!
+              Sorry for the incovinience, Coding Questions will be added soon!!
             </div>
           ) : (
             ""
