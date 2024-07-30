@@ -40,31 +40,34 @@ const Interview = ({ params }) => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
             <div className="flex flex-col my-5 gap-5">
-              <div className="flex flex-col gap-5 p-5 rounded-lg border">
-                <h2 className="text-lg">
-                  <strong>Job Role/Job Position:</strong>{" "}
+              <div className="bg-gray-900 text-gray-400 flex flex-col gap-5 p-5 border-gray-600 rounded-lg border">
+                <h2>
+                  <strong className="text-lg">Job Role/Job Position:</strong>{" "}
                   {interviewData?.jobPosition}
                 </h2>
-                <h2 className="text-lg">
-                  <strong>Job Description/Tech Stack:</strong>{" "}
+                <h2>
+                  <strong className="text-lg">
+                    Job Description/Tech Stack:
+                  </strong>{" "}
                   {interviewData?.jobDesc}
                 </h2>
-                <h2 className="text-lg">
-                  <strong>Years of Experience:</strong>{" "}
+                <h2>
+                  <strong className="text-lg">Years of Experience:</strong>{" "}
                   {interviewData?.jobExperience}
                 </h2>
               </div>
-              <div className="p-5 border rounded-lg border-gray-400 bg-gray-100">
+              <div className="p-5 border rounded-lg border-gray-600 bg-gray-900">
                 <h2 className="flex gap-2 items-center">
                   <Lightbulb /> <strong>Information</strong>
                 </h2>
-                <h2 className="mt-3 text-gray-400">
+                <h2 className="mt-3 text-gray-500">
                   Enable your WebCam and Microphone to start your AI Generated
                   Mock Interview. It has 5 question which you can answer and at
                   rhe last you will get the report on the basis of your answer.{" "}
                   <br />
-                  <br /> NOTE: We never record your video, you can disable
-                  webcam access any time.
+                  <br /> <span className="text-gray-300">NOTE: </span>We never
+                  record your video on our database, it stored on your browser
+                  only which you can clear anytime.
                 </h2>
               </div>
             </div>
@@ -82,11 +85,11 @@ const Interview = ({ params }) => {
                 </div>
               ) : (
                 <div className="flex flex-col justify-center">
-                  <WebcamIcon className="h-72 w-full my-7 p-20 bg-secondary rounded-lg border" />
+                  <WebcamIcon className="h-72 w-full my-7 p-20 bg-gray-800 text-gray-500 border-gray-800 rounded-lg border" />
                   <Button
                     variant="ghost"
                     onClick={() => setWebCamEnabled(true)}
-                    className="bg-gray-200 mb-6 md:mb-0"
+                    className="bg-gray-800 mb-6 md:mb-0"
                   >
                     Enable WebCam and Microphone
                   </Button>
@@ -102,7 +105,7 @@ const Interview = ({ params }) => {
                 "/technicalRound/start"
               }
             >
-              <Button>Start Interview</Button>
+              <Button className="bg-gray-800">Start Interview</Button>
             </Link>
           </div>
         </div>

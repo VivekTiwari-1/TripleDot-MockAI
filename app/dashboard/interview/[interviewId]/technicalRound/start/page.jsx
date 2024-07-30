@@ -142,7 +142,7 @@ const StartInterview = ({ params }) => {
                     autoPlay
                     muted
                     style={{ width: "100%", height: "100%" }}
-                    className="border-2 rounded-md bg-gray-400"
+                    className="border-2 rounded-md border-gray-700 bg-gray-900"
                   />{" "}
                 </div>
 
@@ -150,7 +150,7 @@ const StartInterview = ({ params }) => {
                   <Button
                     onClick={recording ? "" : startRecording}
                     className={`ml-52 mt-8 text-white ${
-                      recording ? "bg-red-600" : "bg-green-600"
+                      recording ? "bg-red-600" : "bg-blue-950"
                     }`}
                   >
                     {recording ? "Stop Recording" : "Enable Video Recording"}
@@ -166,6 +166,7 @@ const StartInterview = ({ params }) => {
                     <div className="flex justify-end gap-6">
                       {activeQuestionIndex > 0 && (
                         <Button
+                          className="bg-gray-800"
                           onClick={() =>
                             setActiveQuestionIndex(activeQuestionIndex - 1)
                           }
@@ -176,6 +177,7 @@ const StartInterview = ({ params }) => {
                       {activeQuestionIndex !=
                         mockInterviewQuestion?.length - 1 && (
                         <Button
+                          className="bg-gray-800"
                           onClick={() =>
                             setActiveQuestionIndex(activeQuestionIndex + 1)
                           }
@@ -192,7 +194,10 @@ const StartInterview = ({ params }) => {
                             "/technicalRound/feedback"
                           }
                         >
-                          <Button onClick={recording ? stopRecording : ""}>
+                          <Button
+                            onClick={recording ? stopRecording : ""}
+                            className="bg-gray-800"
+                          >
                             End Interview
                           </Button>
                         </Link>

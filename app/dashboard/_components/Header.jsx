@@ -11,19 +11,19 @@ const Header = () => {
   useEffect(() => {}, []);
 
   return (
-    <div className="flex justify-between items-center  p-6 bg-secondary shadow-sm">
+    <div className="flex justify-between items-center  p-6 px-24 text-gray-400 bg-slate-950 shadow-sm">
       <Image src={"/logo.svg"} width={100} height={70} alt="" />
       <ul className="hidden md:flex justify-center items-center gap-6">
         <li
-          className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${
-            path == "/dashboard" && "text-primary font-bold"
+          className={`hover:text-gray-300 hover:font-bold transition-all cursor-pointer ${
+            path == "/dashboard" && "text-gray-300 font-bold"
           }`}
         >
           Dashboard
         </li>
         <Link href={"/questionbank"}>
           <li
-            className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${
+            className={`hover:text-gray-300 hover:font-bold transition-all cursor-pointer ${
               path == "/questionbank" && "text-primary font-bold"
             }`}
           >
@@ -31,14 +31,14 @@ const Header = () => {
           </li>
         </Link>
         <li
-          className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${
+          className={`hover:text-gray-300 hover:font-bold transition-all cursor-pointer ${
             path == "/dashboard/upgrade" && "text-primary font-bold"
           }`}
         >
           Upgrade
         </li>
         <li
-          className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${
+          className={`hover:text-gray-300 hover:font-bold transition-all cursor-pointer ${
             path == "/dashboard/how" && "text-primary font-bold"
           }`}
         >

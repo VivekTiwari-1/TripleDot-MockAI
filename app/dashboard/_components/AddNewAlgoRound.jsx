@@ -88,10 +88,10 @@ const AddNewAlgoRound = () => {
   return (
     <div>
       <div
-        className="p-10 border-2 border-dotted border-gray-400 rounded-lg bg-gradient-to-tr from-gray-100 via-gray-300 to-gray-100 hover:scale-105 hover:shadow-sm cursor-pointer transition-all"
+        className="p-10 border-[2px] border-dotted border-gray-800 rounded-lg bg-gradient-to-t from-gray-950 via-gray-800 to-gray-950 hover:scale-95 hover:shadow-sm cursor-pointer transition-all"
         onClick={() => setOpenDialog1(true)}
       >
-        <h2 className="text-lg text-center">Add New Algo Round</h2>
+        <h2 className="text-lg text-center text-gray-500">Algo Round</h2>
       </div>
       <Dialog open={openDialog1}>
         <DialogContent className="max-w-2xl">

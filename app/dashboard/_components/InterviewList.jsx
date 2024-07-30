@@ -34,12 +34,14 @@ const InterviewList = () => {
   };
   return (
     <div>
-      <h2 className="font-medium text-2xl mt-24">Previous Mock Interview</h2>
+      <h2 className="font-medium text-2xl text-gray-300 mt-24">
+        Previous Mock Interview
+      </h2>
 
       {loading ? (
         <Loader />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-7">
+        <div className="bg-slate-900 rounded-2xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 py-8 px-7 my-7">
           {interviewList &&
             interviewList.map((interview, index) => (
               <InterviewItemCard interview={interview} key={index} />

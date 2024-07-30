@@ -108,32 +108,38 @@ const page = ({ params }) => {
         <Loader />
       ) : (
         <div className="flex justify-between flex-col lg:flex-row gap-8 py-8 lg:w-[90vw] lg:-ml-12">
-          <div className="flex flex-col gap-8 pr-12 w-full">
-            <h1 className="text-lg font-bold text-gray-600 my-10">
+          <div className="flex flex-col gap-8 pr-12 w-full text-gray-400">
+            <h1 className="text-lg font-bold text-gray-400 my-5">
               Design an algorithm based on the following Information
             </h1>
             <div>
-              <h1 className="text-md font-semibold">Scenario</h1>
+              <h1 className="text-md font-semibold text-gray-300">Scenario</h1>
               <h2 className="">{mockInterviewQuestion?.question?.scenario}</h2>
             </div>
             <div>
-              <h1 className="text-md font-semibold">Problem</h1>
+              <h1 className="text-md font-semibold text-gray-300">Problem</h1>
               <h2>{mockInterviewQuestion?.question?.problem}</h2>
             </div>
             <div>
-              <h1 className="text-md font-semibold">Requirements</h1>
+              <h1 className="text-md font-semibold text-gray-300">
+                Requirements
+              </h1>
               <h2>{mockInterviewQuestion?.question?.requirements}</h2>
             </div>
           </div>
 
           <div className="w-full">
             <div className="flex justify-end">
-              <Timer onTimeUp={HandleTimeUp} />
+              <Timer
+                initialMinutes={20}
+                initialSeconds={0}
+                onTimeUp={HandleTimeUp}
+              />
             </div>
-            <div className="h-[60vh] rounded-lg shadow-lg p-4">
+            <div className="h-[60vh] bg-slate-800 rounded-lg p-4 text-gray-300">
               <Textarea
                 placeholder="Write your algorithm here"
-                className="h-full w-full"
+                className="h-full w-full bg-gray-900 border-gray-600"
                 required
                 onChange={(event) => setUserSolution(event.target.value)}
               />

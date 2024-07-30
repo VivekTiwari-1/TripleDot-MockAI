@@ -12,20 +12,20 @@ const QuestionsSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
   };
   return (
     mockInterviewQuestion && (
-      <div className="p-5 border rounded-lg my-10">
+      <div className="p-5 border rounded-lg border-gray-800 my-10">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {mockInterviewQuestion &&
             mockInterviewQuestion.map((question, index) => (
               <h2
-                className={`p-2 bg-secondary rounded-full text-xs md:text-sm text-center ${
-                  activeQuestionIndex === index && "bg-slate-700 text-white"
+                className={`p-2 bg-gray-800 rounded-full text-xs md:text-sm text-center ${
+                  activeQuestionIndex === index && "bg-gray-900 text-white"
                 }`}
               >
                 Question {index + 1}
               </h2>
             ))}
         </div>
-        <h2 className="my-5 text-md md:text-lg">
+        <h2 className="my-5 text-gray-300 text-md md:text-lg">
           {mockInterviewQuestion[activeQuestionIndex]?.question}
         </h2>
 
@@ -34,12 +34,12 @@ const QuestionsSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
             textToSpeech(mockInterviewQuestion[activeQuestionIndex]?.question)
           }
         />
-        <div className="flex flex-col rounded-lg p-5 bg-gray-100 mt-20">
-          <h2 className="flex gap-2 items-center text-primary">
+        <div className="flex flex-col rounded-lg p-5 bg-gray-800 mt-20">
+          <h2 className="flex gap-2 items-center text-gray-300">
             <Lightbulb />
             <strong>Note:</strong>
           </h2>
-          <h2 className="text-sm text-primary my-2">
+          <h2 className="text-sm text-gray-400 my-2">
             Click on record answer when you want to answer the question, At the
             end of the interview we will give you the feedback along with the
             correct answer for each of question and your answer to compare it.

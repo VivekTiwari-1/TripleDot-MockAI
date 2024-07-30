@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/utils/db";
 import { ObjectiveMock } from "@/utils/schema";
 import { eq } from "drizzle-orm";
+import { Lightbulb } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -38,8 +39,8 @@ const page = ({ params }) => {
           <h1 className="text-center text-3xl font-bold">Instructions</h1>
           <div className="flex gap-8 mt-8">
             <div className="info">
-              <div className="flex flex-col gap-12 p-4 rounded-lg border">
-                <div className="flex flex-col gap-5 bg-gray-200 p-6 rounded-md">
+              <div className="flex flex-col gap-12 p-4 rounded-lg border border-gray-700">
+                <div className="flex flex-col gap-5 bg-gray-900 text-gray-400 p-6 rounded-md">
                   <h2 className="text-lg">
                     <strong>Tech Stack: </strong> {interviewData?.techStack}
                   </h2>
@@ -47,37 +48,36 @@ const page = ({ params }) => {
                     <strong>Experience: </strong> {interviewData?.level}
                   </h2>
                 </div>
-                <div className="flex flex-col gap-5 bg-gray-300 p-6 rounded-md">
+                <div className="flex flex-col gap-5 bg-gray-900 text-gray-500 p-6 rounded-md">
                   <h2 className="">
-                    <strong>Hints: </strong>
-                    Question has a hint which you may use when you are stuck in
-                    question
-                  </h2>
-                  <h2 className="">
-                    <strong>Time Limit: </strong>
-                    There will be a timer on the top right corner of the
-                    interface showing the remaining duration
-                  </h2>
-                  <h2 className="">
-                    <strong>*NOTE: </strong>
-                    Below editor interface, check error button will show you any
-                    possible error and Save button will save your code before
-                    submission
+                    <strong className="text-gray-400 flex">
+                      <Lightbulb /> NOTE:{" "}
+                    </strong>
+                    <br />
+                    It will contain 10 questions along with four options <br />
+                    Select an option and press next to save it and move to next
+                    Question <br />
+                    At last question, you will get a preview of all questions{" "}
+                    <br />
+                    There will be a Timer of 5 minutes, if time gets over it
+                    will automatically submit your answer
                   </h2>
                 </div>
               </div>
             </div>
-            <div className="image w-[40vw] h-[60vh] bg-slate-100 mt-4 rounded-lg border"></div>
+            <div className="image w-[40vw] h-[60vh] bg-slate-950 rounded-lg border border-gray-700"></div>
           </div>
-          <Link
-            href={
-              "/dashboard/interview/" +
-              params.interviewId +
-              "/objectiveTest/start"
-            }
-          >
-            <Button className="mt-4">Start Assesment</Button>
-          </Link>
+          <div className="flex justify-end">
+            <Link
+              href={
+                "/dashboard/interview/" +
+                params.interviewId +
+                "/objectiveTest/start"
+              }
+            >
+              <Button className="mt-4 bg-gray-900">Start Assesment</Button>
+            </Link>
+          </div>
         </div>
       )}
     </div>

@@ -116,26 +116,26 @@ const RecordAnswerSection = ({
 
   return (
     <div>
-      <div className="flex justify-between ml-16">
-        <Button
-          variant="outline"
-          className="mt-10"
-          onClick={startStopRecording}
-        >
+      <div className="flex justify-between ml-16 -mr-8">
+        <Button className="mt-10 bg-gray-800" onClick={startStopRecording}>
           {listening ? (
             <h2 className="flex gap-3 text-red-700 animate-pulse items-center">
               <StopCircle />
               Stop Recording
             </h2>
           ) : (
-            <h2 className="flex gap-3 items-center">
+            <h2 className="flex gap-3 items-center text-gray-300">
               <Mic />
               Record Answer
             </h2>
           )}
         </Button>
 
-        <Button className="m-10" onClick={updateUserAnswer} disabled={loading}>
+        <Button
+          className="m-10 bg-gray-800"
+          onClick={updateUserAnswer}
+          disabled={loading}
+        >
           {loading ? (
             <>
               <LoaderCircle className="animate-spin" />

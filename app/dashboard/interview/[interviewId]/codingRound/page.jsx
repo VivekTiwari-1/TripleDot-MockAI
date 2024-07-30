@@ -5,8 +5,10 @@ import { Button } from "@/components/ui/button";
 import { db } from "@/utils/db";
 import { CodingInterview } from "@/utils/schema";
 import { eq } from "drizzle-orm";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import img from "@/app/Images/coding_interface.png";
 
 const page = ({ params }) => {
   const [interviewData, setInterviewData] = useState([]);
@@ -38,8 +40,8 @@ const page = ({ params }) => {
           <h1 className="text-center text-3xl font-bold">Instructions</h1>
           <div className="flex gap-8 mt-8">
             <div className="info">
-              <div className="flex flex-col gap-12 p-4 rounded-lg border">
-                <div className="flex flex-col gap-5 bg-gray-200 p-6 rounded-md">
+              <div className="flex flex-col gap-12 p-4 rounded-lg border border-gray-700">
+                <div className="flex flex-col gap-5 bg-gray-900 text-gray-400 p-6 rounded-md">
                   <h2 className="text-lg">
                     <strong>Job Role/Job Position: </strong>{" "}
                     {interviewData?.jobPosition}
@@ -53,19 +55,19 @@ const page = ({ params }) => {
                     {interviewData?.jobExperience}
                   </h2>
                 </div>
-                <div className="flex flex-col gap-5 bg-gray-300 p-6 rounded-md">
+                <div className="flex flex-col gap-5 bg-gray-900 text-gray-500 p-6 rounded-md">
                   <h2 className="">
-                    <strong>Hints: </strong>
-                    Question has a hint which you may use when you are stuck in
+                    <strong className="text-gray-400">Hints: </strong>
+                    It contains a hint which you may use when you are stuck in
                     question
                   </h2>
                   <h2 className="">
-                    <strong>Time Limit: </strong>
+                    <strong className="text-gray-400">Time Limit: </strong>
                     There will be a timer on the top right corner of the
                     interface showing the remaining duration
                   </h2>
                   <h2 className="">
-                    <strong>*NOTE: </strong>
+                    <strong className="text-gray-400">*NOTE: </strong>
                     Below editor interface, check error button will show you any
                     possible error and Save button will save your code before
                     submission
@@ -73,17 +75,21 @@ const page = ({ params }) => {
                 </div>
               </div>
             </div>
-            <div className="image w-[40vw] h-[60vh] bg-slate-100 mt-4 rounded-lg border"></div>
+            <div className="image w-[45vw] h-[60vh] bg-slate-900 mt-4 pt-5 px-2 rounded-lg border border-gray-700">
+              <Image src={img} className="object-cover" />
+            </div>
           </div>
-          <Link
-            href={
-              "/dashboard/interview/" +
-              params.interviewId +
-              "/codingRound/start"
-            }
-          >
-            <Button className="mt-4">Start Assesment</Button>
-          </Link>
+          <div className="flex justify-end">
+            <Link
+              href={
+                "/dashboard/interview/" +
+                params.interviewId +
+                "/codingRound/start"
+              }
+            >
+              <Button className="mt-4 bg-slate-900">Start Assesment</Button>
+            </Link>
+          </div>
         </div>
       )}
     </div>

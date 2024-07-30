@@ -51,15 +51,17 @@ const page = ({ params }) => {
 
   return (
     <div>
-      <h1 className="font-semibold text-3xl mt-6">Your Response</h1>
+      <h1 className="font-semibold text-3xl mt-6 text-gray-300">
+        Your Response
+      </h1>
       {loading ? (
         <Loader />
       ) : (
         <div>
-          <div className="bg-gray-200 flex flex-col gap-4 my-6 p-8 rounded-lg">
+          <div className="bg-gray-900 flex flex-col gap-4 my-6 p-8 rounded-lg">
             {interviewData &&
               interviewData.map((item, index) => (
-                <div className="bg-gray-300 flex flex-col gap-1 px-7 py-4 rounded-md">
+                <div className="bg-gray-950 text-gray-400 flex flex-col gap-1 px-7 py-4 rounded-md">
                   <div className="font-semibold ">
                     <span className="font-bold mr-2">Q.{index + 1}</span>
                     {item?.question}
@@ -79,14 +81,14 @@ const page = ({ params }) => {
           </div>
           <div className="flex justify-between mb-7">
             <Link href="/dashboard">
-              <Button>Go Home</Button>
+              <Button className="bg-gray-900 text-gray-300">Go Home</Button>
             </Link>
             <Link
               href={
                 "/dashboard/interview/" + params.interviewId + "/objectiveTest"
               }
             >
-              <Button>Re-attempt</Button>
+              <Button className="bg-gray-900 text-gray-300">Re-attempt</Button>
             </Link>
           </div>
         </div>

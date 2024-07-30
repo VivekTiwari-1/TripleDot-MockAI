@@ -96,9 +96,8 @@ const Feedback = ({ params }) => {
               <h2 className="text-3xl font-bold text-green-500">
                 Congratulations!
               </h2>
-              <h2 className="font-bold text-2xl">Here is your feedback</h2>
-              <h2 className="text-primary text-lg my-3">
-                Your overall rating: <strong>7/10</strong>
+              <h2 className="text-gray-400 font-bold text-2xl my-4">
+                Here is your feedback
               </h2>
 
               <h2 className="text-sm text-gray-500">
@@ -106,32 +105,40 @@ const Feedback = ({ params }) => {
                 and feedback for improvement
               </h2>
 
-              <div className="">
+              <div className="mt-8">
                 <div>
                   {feedbackList &&
                     feedbackList.map((item, index) => (
                       <Collapsible key={index} className="mt-4">
-                        <CollapsibleTrigger className="p-2 bg-secondary rounded my-2 flex justify-between w-full">
+                        <CollapsibleTrigger className="p-2 bg-gray-900 text-gray-400 rounded my-2 flex justify-between w-full">
                           {index + 1 + ") "}
                           {item.question}{" "}
                           <ChevronsUpDown className="h-5 w-5 ml-4" />
                         </CollapsibleTrigger>
                         <CollapsibleContent>
                           <div className="flex flex-col gap-2">
-                            <h2 className="text-gray-600 p-2 border rounded-lg">
-                              <strong>Rating: </strong>
+                            <h2 className="text-gray-500 p-2 border border-gray-600 rounded-lg">
+                              <strong className="text-gray-400">
+                                Rating:{" "}
+                              </strong>
                               {item.rating}
                             </h2>
-                            <h2 className="text-gray-600 p-2 border rounded-lg bg-gray-100 text-sm">
-                              <strong>Your answer: </strong>
+                            <h2 className="text-gray-500 p-2 border rounded-lg border-gray-600 bg-gray-950 text-sm">
+                              <strong className="text-gray-400">
+                                Your answer:{" "}
+                              </strong>
                               {item.userAns}
                             </h2>
-                            <h2 className="text-gray-600 p-2 border rounded-lg bg-gray-100 text-sm">
-                              <strong>Expected answer: </strong>
+                            <h2 className="text-gray-500 p-2 border rounded-lg border-gray-600 bg-gray-950 text-sm">
+                              <strong className="text-gray-400">
+                                Expected answer:{" "}
+                              </strong>
                               {item.correctAns}
                             </h2>
-                            <h2 className="text-gray-600 p-2 border rounded-lg bg-gray-100 text-sm">
-                              <strong>Feedback: </strong>
+                            <h2 className="text-gray-500 p-2 border rounded-lg border-gray-600 bg-gray-950 text-sm">
+                              <strong className="text-gray-400">
+                                Feedback:{" "}
+                              </strong>
                               {item.feedback}
                             </h2>
                           </div>
@@ -144,15 +151,15 @@ const Feedback = ({ params }) => {
                   <h1 className="text-2xl font-bold text-gray-400 mb-8">
                     Analyze your Video
                   </h1>
-                  <div className="h-[60vh] w-[50vw] bg-gray-600 p-2">
+                  <div className="h-[60vh] w-[50vw] bg-gray-800 p-2">
                     <video
                       ref={playerRef}
                       src={videoURL}
                       controls
-                      className=" border-2 border-gray-900 w-full h-full"
+                      className="border-2 border-gray-900 w-full h-full"
                     />
                   </div>
-                  <div className="flex gap-4 py-4 px-8 rounded-b-3xl bg-gray-600">
+                  <div className="flex gap-4 py-4 px-8 rounded-b-3xl bg-gray-800">
                     <Button
                       onClick={playRecording}
                       className="px-4 py-2 text-white bg-green-600"
@@ -172,7 +179,12 @@ const Feedback = ({ params }) => {
               </div>
             </>
           )}
-          <Button onClick={() => router.replace("/dashboard")}>Go Home</Button>
+          <Button
+            onClick={() => router.replace("/dashboard")}
+            className="bg-gray-700"
+          >
+            Go to Dashboard
+          </Button>
         </div>
       )}
     </div>
