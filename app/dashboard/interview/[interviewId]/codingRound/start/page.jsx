@@ -194,7 +194,7 @@ const page = ({ params }) => {
                 </p>
               </div>
             </div>
-            <div className="fixed right-2 bg-neutral-800 px-8 pt-4 pb-8">
+            <div className=" right-2 bg-neutral-800 px-8 pt-4 pb-8">
               <div className="flex justify-between mb-4">
                 <h1 className="border border-neutral-600 rounded-lg px-4 h-6  text-neutral-500">
                   {language?.toLowerCase()}

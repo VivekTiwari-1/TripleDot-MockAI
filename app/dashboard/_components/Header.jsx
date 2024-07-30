@@ -2,6 +2,7 @@
 
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect } from "react";
 
@@ -20,13 +21,15 @@ const Header = () => {
         >
           Dashboard
         </li>
-        <li
-          className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${
-            path == "/dashboard/questions" && "text-primary font-bold"
-          }`}
-        >
-          Questions
-        </li>
+        <Link href={"/questionbank"}>
+          <li
+            className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${
+              path == "/questionbank" && "text-primary font-bold"
+            }`}
+          >
+            Questions
+          </li>
+        </Link>
         <li
           className={`hover:text-primary hover:font-bold transition-all cursor-pointer ${
             path == "/dashboard/upgrade" && "text-primary font-bold"

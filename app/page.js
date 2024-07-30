@@ -14,12 +14,14 @@ import { ChevronsUpDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import HeroImg from "./Images/Untitled design (1).png";
-import img1 from "./Images/dark-mode-dashboard.png";
+import img1 from "./Images/QB.png";
 import img2 from "./Images/OIP (15).jpeg";
-import { UserButton } from "@clerk/nextjs";
+import { UserButton, useUser } from "@clerk/nextjs";
 
 export default function Home() {
   const [boxNumber, setBoxNumber] = useState(1);
+
+  const { user } = useUser();
 
   const disableBox1 = () => {
     setBoxNumber(2);
@@ -44,14 +46,17 @@ export default function Home() {
             </li>
           </Link>
         </ul>
-        {/* <div className="h-10 w-10 flex justify-center items-center border-2 border-gray-800 rounded-full">
-          <UserButton />
-        </div> */}
-        <Link href={"./dashboard"}>
-          <h2 className="text-gray-400 cursor-pointer hover:text-gray-200">
-            Sign In
-          </h2>
-        </Link>
+        {user ? (
+          <div className="h-10 w-10 flex justify-center items-center border-2 border-gray-800 rounded-full">
+            <UserButton />
+          </div>
+        ) : (
+          <Link href={"./dashboard"}>
+            <h2 className="text-gray-400 cursor-pointer hover:text-gray-200">
+              Sign In
+            </h2>
+          </Link>
+        )}
       </div>
 
       {/* HERO SECTION */}
@@ -166,12 +171,10 @@ export default function Home() {
                   : ""
               } p-4 z-10 cursor-pointer`}
             >
-              <h2 className="text-gray-300 font-bold mb-2">
-                Tailored Interview Scenarios
-              </h2>
+              <h2 className="text-gray-300 font-bold mb-2">Question Bank</h2>
               <p className="text-gray-400">
-                Choose from a wide range of interview types, from coding
-                challenges to behavioral questions, and everything in between.
+                Practice with the thousands of questions of various types like
+                Behavioral, Technical, objective or coding and algorithm
               </p>
             </div>
 
@@ -184,7 +187,7 @@ export default function Home() {
               } p-4 z-10 cursor-pointer`}
             >
               <h2 className="text-gray-300 font-bold mb-2">
-                AI-Powered Feedback
+                Personalized Feedback
               </h2>
               <p className="text-gray-400">
                 Receive instant, detailed feedback on your performance to help
@@ -195,14 +198,17 @@ export default function Home() {
           <div className="w-[70%] h-[70vh] rounded-2xl shadow-[25px_5px_60px_10px_rgb(31,41,55)] z-0">
             {boxNumber == 2 ? (
               <div className="h-full w-full rounded-2xl">
-                <div className="h-[70%] w-[60%] absolute bg-[rgba(0,0,0,0.4)]"></div>
-                <Image src={img1} alt="" className="h-full w-full" />
-              </div>
-            ) : (
-              <div className="h-full w-full ">
                 <div className="h-[70%] w-[60%] absolute bg-gradient-to-r from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.1)]"></div>
                 <Image
                   src={img2}
+                  alt=""
+                  className="h-full w-full rounded-2xl"
+                />
+              </div>
+            ) : (
+              <div className="h-full w-full ">
+                <Image
+                  src={img1}
                   alt=""
                   className="h-full w-full rounded-2xl"
                 />

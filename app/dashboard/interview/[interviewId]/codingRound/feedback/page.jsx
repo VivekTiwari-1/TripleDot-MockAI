@@ -29,7 +29,7 @@ const page = ({ params }) => {
 
     const jsonResp = result[result.length - 1];
 
-    //console.log(JSON.parse(jsonResp.feedback));
+    console.log(JSON.parse(jsonResp.correctAns));
     setSolutionFeedback(JSON.parse(jsonResp.feedback));
     setCorrectAnswer(JSON.parse(jsonResp.correctAns));
     setLoading(false);
@@ -100,16 +100,26 @@ const page = ({ params }) => {
             </div>
           </div>
 
-          <div className="w-full bg-gray-300 rounded-xl mt-8 p-4">
+          <div className="w-full bg-gray-300 rounded-xl mt-8 p-4 ">
             <h1 className="font-bold">Correct Solution: </h1>
             <div className="flex justify-between gap-6">
               <div className=" bg-gray-200 p-4 border-[16px] border-gray-300 rounded-xl">
                 <FormatCode code={correctAnswer?.code} language="java" />
               </div>
 
-              <div className="mt-2 flex">
-                <span className="font-bold ">Explanation: </span>
-                <span> {correctAnswer?.explanation}</span>
+              <div className="mt-2 flex flex-col gap-4">
+                <div className="">
+                  <span className="font-bold mr-2">Explanation: </span>
+                  <span> {correctAnswer?.explanation}</span>
+                </div>
+                <div className="">
+                  <span className="font-bold mr-2">Time Complexity: </span>
+                  <span> {correctAnswer?.time_complexity}</span>
+                </div>
+                <div className="">
+                  <span className="font-bold mr-2">Other Approach: </span>
+                  <span> {correctAnswer?.other_approach}</span>
+                </div>
               </div>
             </div>
           </div>

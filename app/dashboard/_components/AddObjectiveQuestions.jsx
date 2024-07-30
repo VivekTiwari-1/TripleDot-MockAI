@@ -84,7 +84,7 @@ const AddObjectiveQuestions = () => {
   return (
     <div>
       <div
-        className="p-10 border rounded-lg bg-gradient-to-tr from-gray-100 via-gray-300 to-gray-100 hover:scale-105 hover:shadow-sm cursor-pointer transition-all"
+        className="p-10 border-2 border-dotted border-gray-400 rounded-lg bg-gradient-to-tr from-gray-100 via-gray-300 to-gray-100 hover:scale-105 hover:shadow-sm cursor-pointer transition-all"
         onClick={() => setOpenDialog(true)}
       >
         {/* <Plus className="h-12 w-12" /> */}

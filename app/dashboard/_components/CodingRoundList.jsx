@@ -43,7 +43,7 @@ const CodingRoundList = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-7">
             {interviewList &&
               interviewList.map((interview, index) => (
-                <div className="border shadow-sm rounded-lg p-3 hover:shadow-xl hover:shadow-gray-600 ">
+                <div className="border shadow-sm rounded-lg p-3 hover:shadow-xl hover:shadow-gray-400 ">
                   <h2 className="font-bold text-xl text-primary">
                     {interview?.jobPosition}
                   </h2>

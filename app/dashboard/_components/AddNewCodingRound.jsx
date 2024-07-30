@@ -48,7 +48,7 @@ const AddNewCodingRound = () => {
       jobExperience +
       " -  Based on this information generate a problem and its solution in " +
       language +
-      ` language in this JSON structure without any extra space in between - { "question": { "title": "", "difficulty": "", "description": "", "input_format": "", "output_format": "", "constraints": "", "sample_input": [ "", "" ], "sample_output": [ "", "" ], "explanation": "", "platform": "", "hint": "" }, "code_solution": { "title": "", "explanation": "", "code": "" } }`;
+      ` language in this JSON structure without any extra space in between - { "question": { "title": "", "difficulty": "", "description": "", "input_format": "", "output_format": "", "constraints": "", "sample_input": [ "", "" ], "sample_output": [ "", "" ], "explanation": "", "platform": "", "hint": "" }, "code_solution": { "explanation": "", "code": "","time_complexity":"","other_approach": "" } }`;
 
     const result = await chatSession.sendMessage(InputPrompt);
     const MockJsonResp = result.response
@@ -57,7 +57,7 @@ const AddNewCodingRound = () => {
       .replace("```", "");
 
     // console.log(MockJsonResp);
-    // console.log(JSON.parse(MockJsonResp));
+    console.log(JSON.parse(MockJsonResp));
 
     setJsonResponse(MockJsonResp);
 
@@ -89,7 +89,7 @@ const AddNewCodingRound = () => {
   return (
     <div>
       <div
-        className="p-10 border rounded-lg bg-gradient-to-tr from-gray-100 via-gray-300 to-gray-100 hover:scale-105 hover:shadow-sm cursor-pointer transition-all "
+        className="p-10 border-2 border-dotted border-gray-400 rounded-lg bg-gradient-to-tr from-gray-100 via-gray-300 to-gray-100 hover:scale-105 hover:shadow-sm cursor-pointer transition-all "
         onClick={() => setOpenDialog2(true)}
       >
         <h2 className="text-lg text-center">Add New Coding Round</h2>
