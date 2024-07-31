@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { chatSession } from "@/utils/GeminiAIModel";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, X } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/utils/db";
 import moment from "moment";
@@ -21,6 +21,7 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { AlgoInterview, CodingInterview } from "@/utils/schema";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "@/components/ui/use-toast";
 
 const AddNewAlgoRound = () => {
   const [openDialog1, setOpenDialog1] = useState(false);
@@ -40,46 +41,53 @@ const AddNewAlgoRound = () => {
 
     setLoading(true);
 
-    const InputPrompt =
-      "Job position:" +
-      jobPosition +
-      ", Tech Stack:" +
-      language +
-      ", Years of experience:" +
-      jobExperience +
-      " - Based on this information, generate 1 algorithm question with clear explanation for the interview and its answer which contains best possible algorithm and its detailed explanation with time complexity in JSON format. Give question and answer as main fields with scenario, problem and requirements as sub-fields in question and algorithm, explanation and time complexity as sub-fields in answer in JSON format without any extra space in between.";
+    try {
+      const InputPrompt =
+        "Job position:" +
+        jobPosition +
+        ", Tech Stack:" +
+        language +
+        ", Years of experience:" +
+        jobExperience +
+        " - Based on this information, generate 1 algorithm question with clear explanation for the interview and its answer which contains best possible algorithm and its detailed explanation with time complexity in JSON format. Give question and answer as main fields with scenario, problem and requirements as sub-fields in question and algorithm, explanation and time complexity as sub-fields in answer in JSON format without any extra space in between.";
 
-    const result = await chatSession.sendMessage(InputPrompt);
-    const MockJsonResp = result.response
-      .text()
-      .replace("```json", "")
-      .replace("```", "");
+      const result = await chatSession.sendMessage(InputPrompt);
+      const MockJsonResp = result.response
+        .text()
+        .replace("```json", "")
+        .replace("```", "");
 
-    setJsonResponse(MockJsonResp);
+      setJsonResponse(MockJsonResp);
 
-    if (MockJsonResp) {
-      const resp = await db
-        .insert(AlgoInterview)
-        .values({
-          mockId: uuidv4(),
-          jsonMockResp: MockJsonResp,
-          jobPosition: jobPosition,
-          language: language,
-          jobExperience: jobExperience,
-          createdBy: user?.primaryEmailAddress?.emailAddress,
-          createdAt: moment().format("DD-MM-YYYY"),
-        })
-        .returning({ mockId: AlgoInterview.mockId });
+      if (MockJsonResp) {
+        const resp = await db
+          .insert(AlgoInterview)
+          .values({
+            mockId: uuidv4(),
+            jsonMockResp: MockJsonResp,
+            jobPosition: jobPosition,
+            language: language,
+            jobExperience: jobExperience,
+            createdBy: user?.primaryEmailAddress?.emailAddress,
+            createdAt: moment().format("DD-MM-YYYY"),
+          })
+          .returning({ mockId: AlgoInterview.mockId });
 
-      console.log(resp);
-      if (resp) {
-        setOpenDialog1(false);
-        router.push(
-          "/dashboard/interview/" + resp[0]?.mockId + "/algorithmRound"
-        );
+        console.log(resp);
+        if (resp) {
+          setOpenDialog1(false);
+          router.push(
+            "/dashboard/interview/" + resp[0]?.mockId + "/algorithmRound"
+          );
+        }
+      } else {
+        console.log("ERROR");
       }
-    } else {
-      console.log("ERROR");
+    } catch (error) {
+      toast({
+        description: "Unable to load content!!",
+        action: <X className="text-red-600" />,
+      });
     }
 
     setLoading(false);

@@ -39,10 +39,10 @@ const Header = () => {
         </li>
         <li
           className={`hover:text-gray-300 hover:font-bold transition-all cursor-pointer ${
-            path == "/dashboard/how" && "text-primary font-bold"
+            path == "/dashboard/community" && "text-primary font-bold"
           }`}
         >
-          How it works?
+          Community
         </li>
       </ul>
       <UserButton />

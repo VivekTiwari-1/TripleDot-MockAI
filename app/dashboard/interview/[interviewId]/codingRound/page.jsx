@@ -8,7 +8,7 @@ import { eq } from "drizzle-orm";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import img from "@/app/Images/coding_interface.png";
+import img from "@/app/Images/CI1.png";
 import { toast } from "@/components/ui/use-toast";
 import { X } from "lucide-react";
 
@@ -46,11 +46,11 @@ const page = ({ params }) => {
       {loading ? (
         <Loader />
       ) : (
-        <div className=" m-2 h-[70vh] w-full ">
+        <div className=" mt-2 h-[70vh] w-full ">
           <h1 className="text-center text-3xl font-bold">Instructions</h1>
           <div className="flex gap-8 mt-8">
             <div className="info">
-              <div className="flex flex-col gap-12 p-4 rounded-lg border border-gray-700">
+              <div className="flex flex-col gap-6 p-4 rounded-lg border border-gray-700">
                 <div className="flex flex-col gap-5 bg-gray-900 text-gray-400 p-6 rounded-md">
                   <h2 className="text-lg">
                     <strong>Job Role/Job Position: </strong>{" "}
@@ -85,8 +85,8 @@ const page = ({ params }) => {
                 </div>
               </div>
             </div>
-            <div className="image w-[45vw] h-[60vh] bg-slate-900 mt-4 pt-5 px-2 rounded-lg border border-gray-700">
-              <Image src={img} className="object-cover" />
+            <div className="image w-[80vw] h-[60vh] bg-slate-900 mt-6 pt-5 px-2 rounded-lg border border-gray-700">
+              <Image src={img} className="w-[80vw] h-[92%]" />
             </div>
           </div>
           <div className="flex justify-end">
@@ -97,7 +97,7 @@ const page = ({ params }) => {
                 "/codingRound/start"
               }
             >
-              <Button className="mt-4 bg-slate-900">Start Assesment</Button>
+              <Button className="mt-2 bg-slate-900">Start Assesment</Button>
             </Link>
           </div>
         </div>

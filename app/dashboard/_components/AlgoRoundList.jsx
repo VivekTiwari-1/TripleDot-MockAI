@@ -7,6 +7,8 @@ import { desc, eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { X } from "lucide-react";
 
 const AlgoRoundList = () => {
   const { user } = useUser();
@@ -20,16 +22,23 @@ const AlgoRoundList = () => {
 
   const getInterviewList = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(AlgoInterview)
-      .where(
-        eq(AlgoInterview.createdBy, user?.primaryEmailAddress?.emailAddress)
-      )
-      .orderBy(desc(AlgoInterview.id));
 
-    // console.log(result);
-    setInterviewList(result);
+    try {
+      const result = await db
+        .select()
+        .from(AlgoInterview)
+        .where(
+          eq(AlgoInterview.createdBy, user?.primaryEmailAddress?.emailAddress)
+        )
+        .orderBy(desc(AlgoInterview.id));
+
+      setInterviewList(result);
+    } catch (error) {
+      toast({
+        description: "Unable to load content!!",
+        action: <X className="text-red-600" />,
+      });
+    }
     setLoading(false);
   };
   return (

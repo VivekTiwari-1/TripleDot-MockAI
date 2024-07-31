@@ -1,17 +1,11 @@
 "use client";
 
-import { db } from "@/utils/db";
-import { MockInterview } from "@/utils/schema";
-import { eq } from "drizzle-orm";
-import React, { useEffect, useState } from "react";
-import Loader from "../dashboard/_components/Loader";
+import React, { useState } from "react";
 import InterviewQuest from "./_components/InterviewQuest";
 import ObjectiveQuest from "./_components/ObjectiveQuest";
 
 const page = () => {
   const [index, setIndex] = useState(0);
-
-  const [loading, setLoading] = useState();
 
   return (
     <div className="bg-black text-white flex flex-col items-center py-8 px-32">
@@ -44,37 +38,31 @@ const page = () => {
         </ul>
       </div>
 
-      {loading ? (
-        <div className="h-[83vh]">
-          <Loader />
-        </div>
-      ) : (
-        <div>
-          {index == 0 ? (
-            <h1 className="text-gray-700 h-[83vh] flex justify-center items-center">
-              Select among the above to see result
-            </h1>
-          ) : (
-            ""
-          )}
-          {index == 1 ? <InterviewQuest /> : ""}
-          {index == 2 ? <ObjectiveQuest /> : ""}
-          {index == 3 ? (
-            <div className="bg-black text-gray-700 h-[83vh] w-full flex justify-center items-center">
-              Algorithm Questions will be added soon!!
-            </div>
-          ) : (
-            ""
-          )}
-          {index == 4 ? (
-            <div className="bg-black text-gray-700 h-[83vh] w-full flex justify-center items-center">
-              Coding Questions will be added soon!!
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-      )}
+      <div>
+        {index == 0 ? (
+          <h1 className="text-gray-700 h-[83vh] flex justify-center items-center">
+            Select among the above to see result
+          </h1>
+        ) : (
+          ""
+        )}
+        {index == 1 ? <InterviewQuest /> : ""}
+        {index == 2 ? <ObjectiveQuest /> : ""}
+        {index == 3 ? (
+          <div className="bg-black text-gray-700 h-[83vh] w-full flex justify-center items-center">
+            Algorithm Questions will be added soon!!
+          </div>
+        ) : (
+          ""
+        )}
+        {index == 4 ? (
+          <div className="bg-black text-gray-700 h-[83vh] w-full flex justify-center items-center">
+            Coding Questions will be added soon!!
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

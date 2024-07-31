@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { db } from "@/utils/db";
 import { AlgoFeedback } from "@/utils/schema";
 import { eq } from "drizzle-orm";
-import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -13,8 +12,9 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, X } from "lucide-react";
 import Loader from "@/app/dashboard/_components/Loader";
+import { toast } from "@/components/ui/use-toast";
 
 const page = ({ params }) => {
   const [interviewData, setInterviewData] = useState();
@@ -29,15 +29,24 @@ const page = ({ params }) => {
 
   const GetInterviewDetails = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(AlgoFeedback)
-      .where(eq(AlgoFeedback.mockIdRef, params.interviewId));
 
-    setInterviewData(result[0]);
-    setMockInterviewQuestion(JSON.parse(result[0].question));
-    setCorrectAnswer(JSON.parse(result[0].correctAns));
-    setFeedback(JSON.parse(result[0].feedback));
+    try {
+      const result = await db
+        .select()
+        .from(AlgoFeedback)
+        .where(eq(AlgoFeedback.mockIdRef, params.interviewId));
+
+      setInterviewData(result[0]);
+      setMockInterviewQuestion(JSON.parse(result[0].question));
+      setCorrectAnswer(JSON.parse(result[0].correctAns));
+      setFeedback(JSON.parse(result[0].feedback));
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
+    }
+
     setLoading(false);
   };
   return (

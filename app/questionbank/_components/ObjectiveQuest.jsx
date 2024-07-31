@@ -61,7 +61,7 @@ const ObjectiveQuest = () => {
             <div className="bg-gradient-to-r from-gray-950 via-gray-900 to-gray-950 py-8 px-8 rounded-2xl">
               <div className="flex flex-col">
                 {questions?.map((item, index) => (
-                  <div className="bg-slate-950 border border-gray-800 p-4 rounded-xl mb-7 hover:scale-105 ">
+                  <div className="bg-slate-950 border border-gray-800 p-4 rounded-xl mb-7 hover:scale-105 transition-transform duration-300">
                     <h2 className="text-gray-400 flex">
                       <span className="text-gray-300 mr-2">Question: </span>
                       <span>{item?.question}</span>

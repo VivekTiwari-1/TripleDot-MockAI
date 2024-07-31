@@ -1,10 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { db } from "@/utils/db";
 import { ObjectiveMock } from "@/utils/schema";
 import { useUser } from "@clerk/nextjs";
 import { desc, eq } from "drizzle-orm";
+import { X } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -20,16 +22,24 @@ const ObjectiveTestList = () => {
 
   const getInterviewList = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(ObjectiveMock)
-      .where(
-        eq(ObjectiveMock.createdBy, user?.primaryEmailAddress?.emailAddress)
-      )
-      .orderBy(desc(ObjectiveMock.id));
 
-    console.log(result);
-    setInterviewList(result);
+    try {
+      const result = await db
+        .select()
+        .from(ObjectiveMock)
+        .where(
+          eq(ObjectiveMock.createdBy, user?.primaryEmailAddress?.emailAddress)
+        )
+        .orderBy(desc(ObjectiveMock.id));
+
+      setInterviewList(result);
+    } catch (error) {
+      toast({
+        description: "Unable to load content!!",
+        action: <X className="text-red-600" />,
+      });
+    }
+
     setLoading(false);
   };
   return (

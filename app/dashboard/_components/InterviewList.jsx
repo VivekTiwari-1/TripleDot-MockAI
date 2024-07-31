@@ -7,6 +7,8 @@ import { desc, eq } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import InterviewItemCard from "./InterviewItemCard";
 import Loader from "./Loader";
+import { toast } from "@/components/ui/use-toast";
+import { X } from "lucide-react";
 
 const InterviewList = () => {
   const { user } = useUser();
@@ -20,16 +22,24 @@ const InterviewList = () => {
 
   const getInterviewList = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(MockInterview)
-      .where(
-        eq(MockInterview.createdBy, user?.primaryEmailAddress?.emailAddress)
-      )
-      .orderBy(desc(MockInterview.id));
 
-    // console.log(result);
-    setInterviewList(result);
+    try {
+      const result = await db
+        .select()
+        .from(MockInterview)
+        .where(
+          eq(MockInterview.createdBy, user?.primaryEmailAddress?.emailAddress)
+        )
+        .orderBy(desc(MockInterview.id));
+
+      setInterviewList(result);
+    } catch (error) {
+      toast({
+        description: "Unable to load content!!",
+        action: <X className="text-red-600" />,
+      });
+    }
+
     setLoading(false);
   };
   return (
