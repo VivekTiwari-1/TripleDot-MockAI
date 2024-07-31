@@ -13,13 +13,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { chatSession } from "@/utils/GeminiAIModel";
-import { LoaderCircle, Plus } from "lucide-react";
+import { LoaderCircle, Plus, X } from "lucide-react";
 import { MockInterview } from "@/utils/schema";
 import { v4 as uuidv4 } from "uuid";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { db } from "@/utils/db";
 import { useRouter } from "next/navigation";
+import { toast } from "@/components/ui/use-toast";
 
 const AddNewInterview = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -37,47 +38,54 @@ const AddNewInterview = () => {
 
     setLoading(true);
 
-    const InputPrompt =
-      "Job position:" +
-      jobPosition +
-      ", Job Description:" +
-      jobDesc +
-      ", Years of experience:" +
-      jobExperience +
-      " - Based on this information, generate 5 interview questions and their answers in JSON format. Give questions and answers as fields in JSON";
+    try {
+      const InputPrompt =
+        "Job position:" +
+        jobPosition +
+        ", Job Description:" +
+        jobDesc +
+        ", Years of experience:" +
+        jobExperience +
+        " - Based on this information, generate 5 interview questions and their answers in JSON format. Give questions and answers as fields in JSON";
 
-    const result = await chatSession.sendMessage(InputPrompt);
-    const MockJsonResp = result.response
-      .text()
-      .replace("```json", "")
-      .replace("```", "");
+      const result = await chatSession.sendMessage(InputPrompt);
+      const MockJsonResp = result.response
+        .text()
+        .replace("```json", "")
+        .replace("```", "");
 
-    console.log(MockJsonResp);
-    setJsonResponse(MockJsonResp);
+      console.log(MockJsonResp);
+      setJsonResponse(MockJsonResp);
 
-    if (MockJsonResp) {
-      const resp = await db
-        .insert(MockInterview)
-        .values({
-          mockId: uuidv4(),
-          jsonMockResp: MockJsonResp,
-          jobPosition: jobPosition,
-          jobDesc: jobDesc,
-          jobExperience: jobExperience,
-          createdBy: user?.primaryEmailAddress?.emailAddress,
-          createdAt: moment().format("DD-MM-YYYY"),
-        })
-        .returning({ mockId: MockInterview.mockId });
+      if (MockJsonResp) {
+        const resp = await db
+          .insert(MockInterview)
+          .values({
+            mockId: uuidv4(),
+            jsonMockResp: MockJsonResp,
+            jobPosition: jobPosition,
+            jobDesc: jobDesc,
+            jobExperience: jobExperience,
+            createdBy: user?.primaryEmailAddress?.emailAddress,
+            createdAt: moment().format("DD-MM-YYYY"),
+          })
+          .returning({ mockId: MockInterview.mockId });
 
-      console.log(resp);
-      if (resp) {
-        setOpenDialog(false);
-        router.push(
-          "/dashboard/interview/" + resp[0]?.mockId + "/technicalRound"
-        );
+        console.log(resp);
+        if (resp) {
+          setOpenDialog(false);
+          router.push(
+            "/dashboard/interview/" + resp[0]?.mockId + "/technicalRound"
+          );
+        }
+      } else {
+        console.log("ERROR");
       }
-    } else {
-      console.log("ERROR");
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
     }
 
     setLoading(false);

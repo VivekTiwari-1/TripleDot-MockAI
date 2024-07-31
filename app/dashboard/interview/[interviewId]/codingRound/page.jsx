@@ -9,6 +9,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import img from "@/app/Images/coding_interface.png";
+import { toast } from "@/components/ui/use-toast";
+import { X } from "lucide-react";
 
 const page = ({ params }) => {
   const [interviewData, setInterviewData] = useState([]);
@@ -21,13 +23,21 @@ const page = ({ params }) => {
 
   const GetInterviewDetails = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(CodingInterview)
-      .where(eq(CodingInterview.mockId, params.interviewId));
 
-    console.log(result);
-    setInterviewData(result[0]);
+    try {
+      const result = await db
+        .select()
+        .from(CodingInterview)
+        .where(eq(CodingInterview.mockId, params.interviewId));
+
+      console.log(result);
+      setInterviewData(result[0]);
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
+    }
 
     setLoading(false);
   };

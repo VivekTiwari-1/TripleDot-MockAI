@@ -2,10 +2,11 @@
 
 import Loader from "@/app/dashboard/_components/Loader";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { db } from "@/utils/db";
 import { ObjectiveMock } from "@/utils/schema";
 import { eq } from "drizzle-orm";
-import { Lightbulb } from "lucide-react";
+import { Lightbulb, X } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
@@ -20,13 +21,19 @@ const page = ({ params }) => {
 
   const GetInterviewDetails = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(ObjectiveMock)
-      .where(eq(ObjectiveMock.mockId, params.interviewId));
+    try {
+      const result = await db
+        .select()
+        .from(ObjectiveMock)
+        .where(eq(ObjectiveMock.mockId, params.interviewId));
 
-    console.log(result);
-    setInterviewData(result[0]);
+      setInterviewData(result[0]);
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
+    }
 
     setLoading(false);
   };

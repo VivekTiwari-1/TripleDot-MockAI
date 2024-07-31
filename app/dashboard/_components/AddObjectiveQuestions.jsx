@@ -7,18 +7,18 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { chatSession } from "@/utils/GeminiAIModel";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, X } from "lucide-react";
 import { MockInterview, ObjectiveMock } from "@/utils/schema";
 import { v4 as uuidv4 } from "uuid";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { db } from "@/utils/db";
 import { useRouter } from "next/navigation";
+import { toast } from "@/components/ui/use-toast";
 
 const AddObjectiveQuestions = () => {
   const [openDialog, setOpenDialog] = useState(false);
@@ -36,47 +36,52 @@ const AddObjectiveQuestions = () => {
 
     setLoading(true);
 
-    const InputPrompt =
-      "Type of questions: " +
-      techStack +
-      ", Level of question: " +
-      level +
-      ", and" +
-      keyword +
-      " - Based on this information, generate 10 objective interview questions along with 4 options and their answers in JSON format without any extra white space in between. Give questions, options and answers as fields in JSON";
+    try {
+      const InputPrompt =
+        "Type of question: " +
+        techStack +
+        ", Level of question: " +
+        level +
+        ", and" +
+        keyword +
+        `- Based on this information, generate 10 objective interview questions along with 4 options and their answers in this JSON structure without any extra space in between - {"question": "", "options": [], "answer": ""}`;
 
-    const result = await chatSession.sendMessage(InputPrompt);
-    const MockJsonResp = result.response
-      .text()
-      .replace("```json", "")
-      .replace("```", "");
+      const result = await chatSession.sendMessage(InputPrompt);
+      const MockJsonResp = result.response
+        .text()
+        .replace("```json", "")
+        .replace("```", "");
 
-    console.log(MockJsonResp);
-    setJsonResponse(MockJsonResp);
+      setJsonResponse(MockJsonResp);
 
-    if (MockJsonResp) {
-      const resp = await db
-        .insert(ObjectiveMock)
-        .values({
-          mockId: uuidv4(),
-          jsonMockResp: MockJsonResp,
-          techStack: techStack,
-          level: level,
-          keyword: keyword,
-          createdBy: user?.primaryEmailAddress?.emailAddress,
-          createdAt: moment().format("DD-MM-YYYY"),
-        })
-        .returning({ mockId: MockInterview.mockId });
+      if (MockJsonResp) {
+        const resp = await db
+          .insert(ObjectiveMock)
+          .values({
+            mockId: uuidv4(),
+            jsonMockResp: MockJsonResp,
+            techStack: techStack,
+            level: level,
+            keyword: keyword,
+            createdBy: user?.primaryEmailAddress?.emailAddress,
+            createdAt: moment().format("DD-MM-YYYY"),
+          })
+          .returning({ mockId: MockInterview.mockId });
 
-      console.log(resp);
-      if (resp) {
-        setOpenDialog(false);
-        router.push(
-          "/dashboard/interview/" + resp[0]?.mockId + "/objectiveTest"
-        );
+        if (resp) {
+          setOpenDialog(false);
+          router.push(
+            "/dashboard/interview/" + resp[0]?.mockId + "/objectiveTest"
+          );
+        }
+      } else {
+        console.log("ERROR");
       }
-    } else {
-      console.log("ERROR");
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
     }
 
     setLoading(false);
@@ -88,7 +93,7 @@ const AddObjectiveQuestions = () => {
         onClick={() => setOpenDialog(true)}
       >
         {/* <Plus className="h-12 w-12" /> */}
-        <h2 className="text-lg text-center text-gray-500">Objective Test</h2>
+        <h2 className="text-lg text-center text-gray-500">Objective Round</h2>
       </div>
       <Dialog open={openDialog}>
         <DialogContent className="max-w-2xl">

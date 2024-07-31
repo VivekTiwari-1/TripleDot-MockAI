@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { chatSession } from "@/utils/GeminiAIModel";
-import { LoaderCircle } from "lucide-react";
+import { LoaderCircle, X } from "lucide-react";
 import Link from "next/link";
 import { db } from "@/utils/db";
 import moment from "moment";
@@ -21,9 +21,9 @@ import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { CodingInterview } from "@/utils/schema";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "@/components/ui/use-toast";
 
 const AddNewCodingRound = () => {
-  const [openDialog1, setOpenDialog1] = useState(false);
   const [openDialog2, setOpenDialog2] = useState(false);
   const [jobPosition, setJobPosition] = useState();
   const [language, setLanguage] = useState();
@@ -40,48 +40,57 @@ const AddNewCodingRound = () => {
 
     setLoading(true);
 
-    const InputPrompt =
-      `I need to create a coding problem for the mock interview.` +
-      "Job position: " +
-      jobPosition +
-      ", Years of experience: " +
-      jobExperience +
-      " -  Based on this information generate a problem and its solution in " +
-      language +
-      ` language in this JSON structure without any extra space in between - { "question": { "title": "", "difficulty": "", "description": "", "input_format": "", "output_format": "", "constraints": "", "sample_input": [ "", "" ], "sample_output": [ "", "" ], "explanation": "", "platform": "", "hint": "" }, "code_solution": { "explanation": "", "code": "","time_complexity":"","other_approach": "" } }`;
+    try {
+      const InputPrompt =
+        `I need to create a coding problem for the mock interview.` +
+        "Job position: " +
+        jobPosition +
+        ", Years of experience: " +
+        jobExperience +
+        " -  Based on this information generate a problem and its solution in " +
+        language +
+        ` language in this JSON structure without any extra space in between - { "question": { "title": "", "difficulty": "", "description": "", "input_format": "", "output_format": "", "constraints": "", "sample_input": [ "", "" ], "sample_output": [ "", "" ], "explanation": "", "platform": "", "hint": "" }, "code_solution": { "explanation": "", "code": "","time_complexity":"","other_approach": "" } }`;
 
-    const result = await chatSession.sendMessage(InputPrompt);
-    const MockJsonResp = result.response
-      .text()
-      .replace("```json", "")
-      .replace("```", "");
+      const result = await chatSession.sendMessage(InputPrompt);
+      const MockJsonResp = result.response
+        .text()
+        .replace("```json", "")
+        .replace("```", "");
 
-    // console.log(MockJsonResp);
-    console.log(JSON.parse(MockJsonResp));
+      // console.log(MockJsonResp);
+      console.log(JSON.parse(MockJsonResp));
 
-    setJsonResponse(MockJsonResp);
+      setJsonResponse(MockJsonResp);
 
-    if (MockJsonResp) {
-      const resp = await db
-        .insert(CodingInterview)
-        .values({
-          mockId: uuidv4(),
-          jsonMockResp: MockJsonResp,
-          jobPosition: jobPosition,
-          language: language,
-          jobExperience: jobExperience,
-          createdBy: user?.primaryEmailAddress?.emailAddress,
-          createdAt: moment().format("DD-MM-YYYY"),
-        })
-        .returning({ mockId: CodingInterview.mockId });
+      if (MockJsonResp) {
+        const resp = await db
+          .insert(CodingInterview)
+          .values({
+            mockId: uuidv4(),
+            jsonMockResp: MockJsonResp,
+            jobPosition: jobPosition,
+            language: language,
+            jobExperience: jobExperience,
+            createdBy: user?.primaryEmailAddress?.emailAddress,
+            createdAt: moment().format("DD-MM-YYYY"),
+          })
+          .returning({ mockId: CodingInterview.mockId });
 
-      console.log(resp);
-      if (resp) {
-        setOpenDialog2(false);
-        router.push("/dashboard/interview/" + resp[0]?.mockId + "/codingRound");
+        console.log(resp);
+        if (resp) {
+          setOpenDialog2(false);
+          router.push(
+            "/dashboard/interview/" + resp[0]?.mockId + "/codingRound"
+          );
+        }
+      } else {
+        console.log("ERROR");
       }
-    } else {
-      console.log("ERROR");
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
     }
 
     setLoading(false);

@@ -8,6 +8,8 @@ import FormatCode from "../_component/FormatCode";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Loader from "@/app/dashboard/_components/Loader";
+import { toast } from "@/components/ui/use-toast";
+import { X } from "lucide-react";
 
 const page = ({ params }) => {
   const [correctAnswer, setCorrectAnswer] = useState();
@@ -21,19 +23,28 @@ const page = ({ params }) => {
 
   const GetInterviewDetails = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(CodingFeedback)
-      .where(eq(CodingFeedback.mockIdRef, params.interviewId))
-      .orderBy(CodingFeedback.id);
 
-    const jsonResp = result[result.length - 1];
+    try {
+      const result = await db
+        .select()
+        .from(CodingFeedback)
+        .where(eq(CodingFeedback.mockIdRef, params.interviewId))
+        .orderBy(CodingFeedback.id);
 
-    console.log(JSON.parse(jsonResp.correctAns));
-    setSolutionFeedback(JSON.parse(jsonResp.feedback));
-    setCorrectAnswer(JSON.parse(jsonResp.correctAns));
+      const jsonResp = result[result.length - 1];
+
+      console.log(JSON.parse(jsonResp.correctAns));
+      setSolutionFeedback(JSON.parse(jsonResp.feedback));
+      setCorrectAnswer(JSON.parse(jsonResp.correctAns));
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
+    }
     setLoading(false);
   };
+
   return (
     <div className="pt-12">
       {loading ? (

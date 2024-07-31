@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 import moment from "moment";
 import { toast } from "@/components/ui/use-toast";
-import { CircleCheckBig } from "lucide-react";
+import { CircleCheckBig, X } from "lucide-react";
 import Loader from "@/app/dashboard/_components/Loader";
 
 const page = ({ params }) => {
@@ -35,17 +35,24 @@ const page = ({ params }) => {
 
   const GetInterviewDetails = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(ObjectiveMock)
-      .where(eq(ObjectiveMock.mockId, params.interviewId));
+    try {
+      const result = await db
+        .select()
+        .from(ObjectiveMock)
+        .where(eq(ObjectiveMock.mockId, params.interviewId));
 
-    const jsonMockResp = JSON.parse(result[0].jsonMockResp);
-    //console.log(JSON.parse(result[0].jsonMockResp));
-    console.log(result[0]);
+      const jsonMockResp = JSON.parse(result[0].jsonMockResp);
+      //console.log(JSON.parse(result[0].jsonMockResp));
+      console.log(result[0]);
 
-    setInterviewData(jsonMockResp);
-    setInterviewInfo(result[0]);
+      setInterviewData(jsonMockResp);
+      setInterviewInfo(result[0]);
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
+    }
 
     setLoading(false);
   };
@@ -77,20 +84,25 @@ const page = ({ params }) => {
   const handleSubmit = async () => {
     setLoading(true);
 
-    const resp = await db.insert(ObjectiveFeedback).values({
-      mockIdRef: interviewInfo?.mockId,
-      jsonMockResp: interviewData,
-      userAnswer: ansArray,
-      userEmail: user?.primaryEmailAddress?.emailAddress,
-      createdAt: moment().format("DD-MM-YYYY"),
-    });
+    try {
+      const resp = await db.insert(ObjectiveFeedback).values({
+        mockIdRef: interviewInfo?.mockId,
+        jsonMockResp: interviewData,
+        userAnswer: ansArray,
+        userEmail: user?.primaryEmailAddress?.emailAddress,
+        createdAt: moment().format("DD-MM-YYYY"),
+      });
 
-    console.log(resp);
-
-    if (resp) {
+      if (resp) {
+        toast({
+          description: "User answer recorded successfully!!",
+          action: <CircleCheckBig className="text-green-600" />,
+        });
+      }
+    } catch (error) {
       toast({
-        description: "User answer recorded successfully!!",
-        action: <CircleCheckBig className="text-green-600" />,
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
       });
     }
 

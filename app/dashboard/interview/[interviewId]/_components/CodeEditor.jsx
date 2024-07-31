@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Editor from "@monaco-editor/react";
+import Editor, { loader } from "@monaco-editor/react";
 import { Button } from "@/components/ui/button";
 
 const CodeEditor = ({ onValueChange, language }) => {
@@ -35,24 +35,48 @@ const CodeEditor = ({ onValueChange, language }) => {
     }
   };
 
+  useEffect(() => {
+    // Load the monaco instance
+    loader.init().then((monaco) => {
+      // Define the custom theme
+      monaco.editor.defineTheme("myCustomTheme", {
+        base: "hc-black", // you can also use 'vs' or 'hc-black'
+        inherit: true, // will inherit the base theme
+        rules: [],
+        colors: {
+          "editor.background": "#030712", // Background color
+          "editor.foreground": "#cbd5e1", // Default text color
+          "editor.lineHighlightBackground": "#082f49", // Line highlight color
+          "editorCursor.foreground": "#22d3ee", // Cursor color
+          "editorIndentGuide.background": "#444444", // Indentation guide color
+          "editor.selectionBackground": "#0ea5e9", // Selection color
+          // Add more customization as needed
+        },
+      });
+
+      // Apply the custom theme
+      monaco.editor.setTheme("myCustomTheme");
+    });
+  }, []);
+
   return (
     <div>
-      <div className="border-2 border-neutral-700">
+      <div className="border-[10px] border-gray-800 p-4 bg-gray-950">
         <Editor
-          height="65vh"
+          height="60vh"
           width="45vw"
-          theme="vs-dark"
           defaultLanguage={value}
           defaultValue="// Write your code here"
+          theme="myCustomTheme"
           onMount={handleEditorDidMount}
         />
       </div>
       <div className="flex justify-end">
         <div className="flex gap-4">
-          <Button onClick={runCode} className="mt-4">
+          <Button onClick={runCode} className="mt-4 bg-gray-950">
             Check Errors
           </Button>
-          <Button onClick={extractCode} className="mt-4">
+          <Button onClick={extractCode} className="mt-4 bg-gray-950">
             Save
           </Button>
         </div>

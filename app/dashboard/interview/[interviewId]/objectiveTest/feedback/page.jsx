@@ -5,24 +5,14 @@ import { db } from "@/utils/db";
 import { ObjectiveFeedback, ObjectiveMock } from "@/utils/schema";
 import { eq } from "drizzle-orm";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Loader from "@/app/dashboard/_components/Loader";
 
 const page = ({ params }) => {
   const [interviewData, setInterviewData] = useState([]);
   const [userAnswer, setUserAnswer] = useState();
-  const [index, setIndex] = useState(0);
-  const [option, setOption] = useState(0);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [ansArray, setAnsArray] = useState(new Array(10));
 
   const [loading, setLoading] = useState(true);
-
-  const router = useRouter();
-
-  //let ansArray = new Array(10);
 
   useEffect(() => {
     GetInterviewDetails();
@@ -30,21 +20,27 @@ const page = ({ params }) => {
 
   const GetInterviewDetails = async () => {
     setLoading(true);
-    const question = await db
-      .select()
-      .from(ObjectiveMock)
-      .where(eq(ObjectiveMock.mockId, params.interviewId));
+    try {
+      const question = await db
+        .select()
+        .from(ObjectiveMock)
+        .where(eq(ObjectiveMock.mockId, params.interviewId));
 
-    const answer = await db
-      .select()
-      .from(ObjectiveFeedback)
-      .where(eq(ObjectiveFeedback.mockIdRef, params.interviewId));
+      const answer = await db
+        .select()
+        .from(ObjectiveFeedback)
+        .where(eq(ObjectiveFeedback.mockIdRef, params.interviewId));
 
-    const jsonMockResp = JSON.parse(question[0].jsonMockResp);
-    //console.log(answer[0]);
+      const jsonMockResp = JSON.parse(question[0].jsonMockResp);
 
-    setInterviewData(jsonMockResp);
-    setUserAnswer(answer[0].userAnswer);
+      setInterviewData(jsonMockResp);
+      setUserAnswer(answer[0].userAnswer);
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
+    }
 
     setLoading(false);
   };
