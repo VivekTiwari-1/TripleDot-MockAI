@@ -30,20 +30,24 @@ const Header = () => {
             Questions
           </li>
         </Link>
-        <li
-          className={`hover:text-gray-300 hover:font-bold transition-all cursor-pointer ${
-            path == "/dashboard/upgrade" && "text-primary font-bold"
-          }`}
-        >
-          Upgrade
-        </li>
-        <li
-          className={`hover:text-gray-300 hover:font-bold transition-all cursor-pointer ${
-            path == "/dashboard/community" && "text-primary font-bold"
-          }`}
-        >
-          Community
-        </li>
+        <Link href={"/pricing"}>
+          <li
+            className={`hover:text-gray-300 hover:font-bold transition-all cursor-pointer ${
+              path == "/pricing" && "text-primary font-bold"
+            }`}
+          >
+            Upgrade
+          </li>
+        </Link>
+        <Link href={"/community"}>
+          <li
+            className={`hover:text-gray-300 hover:font-bold transition-all cursor-pointer ${
+              path == "/community" && "text-primary font-bold"
+            }`}
+          >
+            Community
+          </li>
+        </Link>
       </ul>
       <UserButton />
     </div>

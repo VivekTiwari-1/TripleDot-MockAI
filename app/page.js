@@ -15,18 +15,28 @@ import Image from "next/image";
 import HeroImg from "./Images/Untitled design (1).png";
 import img1 from "./Images/QB.png";
 import img2 from "./Images/CI1.png";
+import img3 from "./Images/OIP (15).jpeg";
+import img4 from "./Images/feedbackAI.png";
 import { UserButton, useUser } from "@clerk/nextjs";
 
 export default function Home() {
-  const [boxNumber, setBoxNumber] = useState(1);
+  const [feat1, setFeat1] = useState(1);
+  const [feat2, setFeat2] = useState(1);
 
   const { user } = useUser();
 
-  const disableBox1 = () => {
-    setBoxNumber(2);
+  const feat1box1 = () => {
+    setFeat1(2);
   };
-  const disableBox2 = () => {
-    setBoxNumber(1);
+  const feat1box2 = () => {
+    setFeat1(1);
+  };
+
+  const feat2box1 = () => {
+    setFeat2(2);
+  };
+  const feat2box2 = () => {
+    setFeat2(1);
   };
 
   return (
@@ -37,8 +47,12 @@ export default function Home() {
           BRANDING
         </h1>
         <ul className="hidden md:flex gap-6 items-center text-gray-400">
-          <li className="cursor-pointer hover:text-gray-300">Pricing</li>
-          <li className="cursor-pointer hover:text-gray-300">Community</li>
+          <Link href="/pricing">
+            <li className="cursor-pointer hover:text-gray-300">Pricing</li>
+          </Link>
+          <Link href="/community">
+            <li className="cursor-pointer hover:text-gray-300">Community</li>
+          </Link>
           <Link href="/questionbank">
             <li className="cursor-pointer hover:text-gray-300">
               Question Bank
@@ -155,18 +169,19 @@ export default function Home() {
       </div>
 
       {/* FEATURES */}
-      <div className="w-full mt-16 flex flex-col items-center rounded-3xl">
-        <h1 className="text-4xl font-bold mt-16 text-gray-400 mb-20">
+      <div className="w-full mt-24 flex flex-col items-center rounded-3xl">
+        <h1 className="text-4xl font-bold mt-16 text-gray-400 my-36">
           <p>Features</p>
           <p className="h-[2px] w-36 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 mt-2"></p>
         </h1>
-        <div className="flex flex-col md:flex-row w-full">
+
+        <div className="FeatBox1 flex flex-col md:flex-row w-full">
           <div className="w-full md:w-[30%] ">
             <div
-              onClick={disableBox2}
+              onClick={feat1box2}
               className={`${
-                boxNumber == 1
-                  ? "bg-gradient-to-r from-gray-900 to-black border-l border-t border-b border-gray-700 rounded-lg"
+                feat1 == 1
+                  ? "bg-gradient-to-r from-gray-900 to-black border-l border-t border-b border-black rounded-lg"
                   : ""
               } p-4 z-10 cursor-pointer`}
             >
@@ -178,10 +193,10 @@ export default function Home() {
             </div>
 
             <div
-              onClick={disableBox1}
+              onClick={feat1box1}
               className={`${
-                boxNumber == 2
-                  ? "bg-gradient-to-r from-gray-900 to-black border-l border-t border-b border-gray-700 rounded-lg"
+                feat1 == 2
+                  ? "bg-gradient-to-r from-gray-900 to-black border-l border-t border-b border-black rounded-lg"
                   : ""
               } p-4 z-10 cursor-pointer`}
             >
@@ -196,8 +211,8 @@ export default function Home() {
               </p>
             </div>
           </div>
-          <div className="hidden lg:block w-[70%] h-[70vh] rounded-2xl shadow-[25px_5px_60px_10px_rgb(31,41,55)] z-0">
-            {boxNumber == 2 ? (
+          <div className="hidden lg:block w-[70%] h-[70vh] rounded-2xl shadow-[30px_5px_60px_10px_rgb(31,41,55)] z-0">
+            {feat1 == 2 ? (
               <div className="h-full w-full rounded-2xl">
                 <div className="h-[70%] w-[60%] absolute bg-gradient-to-b from-[rgba(0,0,0,0.4)] via-transparent to-[rgba(0,0,0,0.3)] rounded-2xl"></div>
                 <Image
@@ -218,13 +233,13 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row w-full mt-36">
+        <div className="FeatBox2 flex flex-col md:flex-row w-full mt-60 mb-40">
           <div className="hidden lg:block w-[70%] h-[70vh] rounded-2xl shadow-[-30px_5px_60px_10px_rgb(31,41,55)] z-0">
-            {boxNumber == 2 ? (
+            {feat2 == 2 ? (
               <div className="h-full w-full rounded-2xl">
                 <div className="h-[70%] w-[60%] absolute bg-gradient-to-b from-[rgba(0,0,0,0.4)] via-transparent to-[rgba(0,0,0,0.3)] rounded-2xl"></div>
                 <Image
-                  src={img2}
+                  src={img3}
                   alt=""
                   className="h-full w-full rounded-2xl"
                 />
@@ -232,7 +247,7 @@ export default function Home() {
             ) : (
               <div className="h-full w-full rounded-2xl">
                 <Image
-                  src={img1}
+                  src={img4}
                   alt=""
                   className="h-full w-full rounded-2xl"
                 />
@@ -242,36 +257,36 @@ export default function Home() {
 
           <div className="w-full md:w-[30%] ">
             <div
-              onClick={disableBox2}
+              onClick={feat2box2}
               className={`${
-                boxNumber == 1
-                  ? "bg-gradient-to-l from-gray-900 to-black border-l border-t border-b border-gray-700 rounded-lg"
-                  : ""
-              } p-4 z-10 cursor-pointer`}
-            >
-              <h2 className="text-gray-300 font-bold mb-2">Question Bank</h2>
-              <p className="text-gray-400">
-                Practice with the thousands of questions of various types like
-                Behavioral, Technical, objective or coding and algorithm
-              </p>
-            </div>
-
-            <div
-              onClick={disableBox1}
-              className={`${
-                boxNumber == 2
-                  ? "bg-gradient-to-l from-gray-900 to-black border-l border-t border-b border-gray-700 rounded-lg"
+                feat2 == 1
+                  ? "bg-gradient-to-l from-gray-900 to-black border-l border-t border-b border-black rounded-lg"
                   : ""
               } p-4 z-10 cursor-pointer`}
             >
               <h2 className="text-gray-300 font-bold mb-2">
-                Integrated Coding Environment
+                Personalized Feedback
               </h2>
               <p className="text-gray-400">
-                {/* Receive instant, detailed feedback on your performance to help
-                you understand your strengths and areas for improvement. */}
-                We have our coding environment to pratice coding problems with
-                timer and get instant feedback on submission
+                Receive instant, detailed feedback on your performance to help
+                you understand your strengths and areas for improvement.
+              </p>
+            </div>
+
+            <div
+              onClick={feat2box1}
+              className={`${
+                feat2 == 2
+                  ? "bg-gradient-to-l from-gray-900 to-black border-l border-t border-b border-black rounded-lg"
+                  : ""
+              } p-4 z-10 cursor-pointer`}
+            >
+              <h2 className="text-gray-300 font-bold mb-2">
+                Recorded Video Analysis
+              </h2>
+              <p className="text-gray-400">
+                Get your interview recorded video for analysis after completing
+                your interview interview with feedback of AI
               </p>
             </div>
           </div>
