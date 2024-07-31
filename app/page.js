@@ -14,7 +14,7 @@ import { useState } from "react";
 import Image from "next/image";
 import HeroImg from "./Images/Untitled design (1).png";
 import img1 from "./Images/QB.png";
-import img2 from "./Images/OIP (15).jpeg";
+import img2 from "./Images/CI1.png";
 import { UserButton, useUser } from "@clerk/nextjs";
 
 export default function Home() {
@@ -30,13 +30,13 @@ export default function Home() {
   };
 
   return (
-    <div className="bg-black text-white px-28 py-4 flex items-center flex-col">
+    <div className="bg-black text-white px-4 lg:px-28 py-4 flex items-center flex-col">
       {/* NAVBAR SECTION */}
-      <div className="Navbar w-full h-fit md:w-[75%] flex justify-between items-center border-gray-700 rounded-full border px-12 py-5">
+      <div className="Navbar w-full h-fit md:w-[75%] flex justify-between items-center border-gray-700 rounded-full border px-4 lg:px-12 py-5">
         <h1 className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600">
           BRANDING
         </h1>
-        <ul className="flex gap-6 items-center text-gray-400">
+        <ul className="hidden md:flex gap-6 items-center text-gray-400">
           <li className="cursor-pointer hover:text-gray-300">Pricing</li>
           <li className="cursor-pointer hover:text-gray-300">Community</li>
           <Link href="/questionbank">
@@ -96,13 +96,13 @@ export default function Home() {
       </div>
 
       {/* HOW IT WORKS? */}
-      <div className="h-[85vh] w-full flex flex-col items-center bg-gradient-to-t from-gray-950 rounded-3xl px-24 mt-16">
+      <div className="md:h-[85vh] w-full flex flex-col items-center bg-gradient-to-t from-gray-950 rounded-3xl p-4 md:px-24 mt-16">
         <h1 className="text-3xl font-bold mt-16 text-gray-400">
           <p>How it Works?</p>
           <p className="h-[2px] w-48 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 mt-2"></p>
         </h1>
 
-        <div className="flex mt-4 items-center gap-12">
+        <div className="flex flex-col md:flex-row mt-4 items-center gap-12">
           <div className="flex flex-col justify-center items-center gap-4">
             <div className="border-4 rounded-full text-gray-300 border-blue-950 p-5 ">
               <CheckSquare />
@@ -115,7 +115,7 @@ export default function Home() {
               extensive library like Technical, Behavioural, etc.
             </p>
           </div>
-          <div className="flex flex-col justify-center items-center gap-4 mt-32">
+          <div className="flex flex-col justify-center items-center gap-4 md:mt-32">
             <div className="border-4 rounded-full text-gray-300 border-blue-950 p-5 ">
               <Timer />
             </div>
@@ -127,7 +127,7 @@ export default function Home() {
               time bounded situation to improve your speed.
             </p>
           </div>
-          <div className="flex flex-col justify-center items-center gap-4 mt-32">
+          <div className="flex flex-col justify-center items-center gap-4 md:mt-32">
             <div className="border-4 rounded-full text-gray-300 border-blue-950 p-5 ">
               <Contact />
             </div>
@@ -155,13 +155,13 @@ export default function Home() {
       </div>
 
       {/* FEATURES */}
-      <div className="h-[100vh] w-full mt-16 flex flex-col items-center rounded-3xl">
+      <div className="w-full mt-16 flex flex-col items-center rounded-3xl">
         <h1 className="text-4xl font-bold mt-16 text-gray-400 mb-20">
           <p>Features</p>
           <p className="h-[2px] w-36 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 mt-2"></p>
         </h1>
-        <div className="flex w-full">
-          <div className="w-[30%]">
+        <div className="flex flex-col md:flex-row w-full">
+          <div className="w-full md:w-[30%] ">
             <div
               onClick={disableBox2}
               className={`${
@@ -186,18 +186,20 @@ export default function Home() {
               } p-4 z-10 cursor-pointer`}
             >
               <h2 className="text-gray-300 font-bold mb-2">
-                Personalized Feedback
+                Integrated Coding Environment
               </h2>
               <p className="text-gray-400">
-                Receive instant, detailed feedback on your performance to help
-                you understand your strengths and areas for improvement.
+                {/* Receive instant, detailed feedback on your performance to help
+                you understand your strengths and areas for improvement. */}
+                We have our coding environment to pratice coding problems with
+                timer and get instant feedback on submission
               </p>
             </div>
           </div>
-          <div className="w-[70%] h-[70vh] rounded-2xl shadow-[25px_5px_60px_10px_rgb(31,41,55)] z-0">
+          <div className="hidden lg:block w-[70%] h-[70vh] rounded-2xl shadow-[25px_5px_60px_10px_rgb(31,41,55)] z-0">
             {boxNumber == 2 ? (
               <div className="h-full w-full rounded-2xl">
-                <div className="h-[70%] w-[60%] absolute bg-gradient-to-r from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.1)]"></div>
+                <div className="h-[70%] w-[60%] absolute bg-gradient-to-b from-[rgba(0,0,0,0.4)] via-transparent to-[rgba(0,0,0,0.3)] rounded-2xl"></div>
                 <Image
                   src={img2}
                   alt=""
@@ -205,7 +207,7 @@ export default function Home() {
                 />
               </div>
             ) : (
-              <div className="h-full w-full ">
+              <div className="h-full w-full rounded-2xl">
                 <Image
                   src={img1}
                   alt=""
@@ -215,10 +217,69 @@ export default function Home() {
             )}
           </div>
         </div>
+
+        <div className="flex flex-col md:flex-row w-full mt-36">
+          <div className="hidden lg:block w-[70%] h-[70vh] rounded-2xl shadow-[-30px_5px_60px_10px_rgb(31,41,55)] z-0">
+            {boxNumber == 2 ? (
+              <div className="h-full w-full rounded-2xl">
+                <div className="h-[70%] w-[60%] absolute bg-gradient-to-b from-[rgba(0,0,0,0.4)] via-transparent to-[rgba(0,0,0,0.3)] rounded-2xl"></div>
+                <Image
+                  src={img2}
+                  alt=""
+                  className="h-full w-full rounded-2xl"
+                />
+              </div>
+            ) : (
+              <div className="h-full w-full rounded-2xl">
+                <Image
+                  src={img1}
+                  alt=""
+                  className="h-full w-full rounded-2xl"
+                />
+              </div>
+            )}
+          </div>
+
+          <div className="w-full md:w-[30%] ">
+            <div
+              onClick={disableBox2}
+              className={`${
+                boxNumber == 1
+                  ? "bg-gradient-to-l from-gray-900 to-black border-l border-t border-b border-gray-700 rounded-lg"
+                  : ""
+              } p-4 z-10 cursor-pointer`}
+            >
+              <h2 className="text-gray-300 font-bold mb-2">Question Bank</h2>
+              <p className="text-gray-400">
+                Practice with the thousands of questions of various types like
+                Behavioral, Technical, objective or coding and algorithm
+              </p>
+            </div>
+
+            <div
+              onClick={disableBox1}
+              className={`${
+                boxNumber == 2
+                  ? "bg-gradient-to-l from-gray-900 to-black border-l border-t border-b border-gray-700 rounded-lg"
+                  : ""
+              } p-4 z-10 cursor-pointer`}
+            >
+              <h2 className="text-gray-300 font-bold mb-2">
+                Integrated Coding Environment
+              </h2>
+              <p className="text-gray-400">
+                {/* Receive instant, detailed feedback on your performance to help
+                you understand your strengths and areas for improvement. */}
+                We have our coding environment to pratice coding problems with
+                timer and get instant feedback on submission
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* TESTIMONIALS */}
-      <div className="Features flex flex-col items-center my-28">
+      <div className="Features w-[80vw] flex flex-col items-center my-28">
         <h1 className="text-3xl font-bold mb-10 text-gray-400">
           <p>Testimonials</p>
           <p className="h-[2px] w-44 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 mt-2"></p>
@@ -227,6 +288,7 @@ export default function Home() {
           items={testimonials}
           direction="right"
           speed="slow"
+          className={"w-full"}
         />
       </div>
 
