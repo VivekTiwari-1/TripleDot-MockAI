@@ -1,8 +1,10 @@
 "use client";
 
 import Loader from "@/app/dashboard/_components/Loader";
+import { toast } from "@/components/ui/use-toast";
 import { db } from "@/utils/db";
 import { MockInterview } from "@/utils/schema";
+import { X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const InterviewQuest = () => {
@@ -16,25 +18,33 @@ const InterviewQuest = () => {
 
   const GetQuestions = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(MockInterview)
-      .orderBy(MockInterview.id);
 
-    const newQuestions = [];
+    try {
+      const result = await db
+        .select()
+        .from(MockInterview)
+        .orderBy(MockInterview.id);
 
-    result.map((item) => {
-      const data = JSON.parse(item.jsonMockResp);
+      const newQuestions = [];
 
-      for (let idx = 0; idx < data.length; idx++) {
-        const quest = data[idx];
-        if (quest) {
-          newQuestions.push(quest);
+      result.map((item) => {
+        const data = JSON.parse(item.jsonMockResp);
+
+        for (let idx = 0; idx < data.length; idx++) {
+          const quest = data[idx];
+          if (quest) {
+            newQuestions.push(quest);
+          }
         }
-      }
-    });
+      });
 
-    setQuestions(newQuestions);
+      setQuestions(newQuestions);
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
+    }
     setLoading(false);
   };
   return (

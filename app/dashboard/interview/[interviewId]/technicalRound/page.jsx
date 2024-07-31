@@ -2,10 +2,11 @@
 
 import Loader from "@/app/dashboard/_components/Loader";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { db } from "@/utils/db";
 import { MockInterview } from "@/utils/schema";
 import { eq } from "drizzle-orm";
-import { Lightbulb, WebcamIcon } from "lucide-react";
+import { Lightbulb, WebcamIcon, X } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Webcam from "react-webcam";
@@ -22,12 +23,19 @@ const Interview = ({ params }) => {
 
   const GetInterviewDetails = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(MockInterview)
-      .where(eq(MockInterview.mockId, params.interviewId));
+    try {
+      const result = await db
+        .select()
+        .from(MockInterview)
+        .where(eq(MockInterview.mockId, params.interviewId));
 
-    setInterviewData(result[0]);
+      setInterviewData(result[0]);
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
+    }
     setLoading(false);
   };
   return (
@@ -89,7 +97,7 @@ const Interview = ({ params }) => {
                   <Button
                     variant="ghost"
                     onClick={() => setWebCamEnabled(true)}
-                    className="bg-gray-800 mb-6 md:mb-0"
+                    className="bg-gray-700 mb-6 md:mb-0"
                   >
                     Enable WebCam and Microphone
                   </Button>
@@ -105,7 +113,7 @@ const Interview = ({ params }) => {
                 "/technicalRound/start"
               }
             >
-              <Button className="bg-gray-800">Start Interview</Button>
+              <Button className="bg-gray-700">Start Interview</Button>
             </Link>
           </div>
         </div>

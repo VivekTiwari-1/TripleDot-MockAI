@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import HoverBorderGradient from "@/components/ui/hover-border-gradient";
 import { InfiniteMovingCards } from "@/components/ui/infinite_moving_card";
 import { BarChart, CheckSquare, Contact, HeartIcon, Timer } from "lucide-react";
@@ -11,7 +10,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { ChevronsUpDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import HeroImg from "./Images/Untitled design (1).png";
 import img1 from "./Images/QB.png";

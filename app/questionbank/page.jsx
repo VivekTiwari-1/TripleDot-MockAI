@@ -61,15 +61,14 @@ const page = () => {
           {index == 2 ? <ObjectiveQuest /> : ""}
           {index == 3 ? (
             <div className="bg-black text-gray-700 h-[83vh] w-full flex justify-center items-center">
-              Sorry for the incovinience, Algorithm Questions will be added
-              soon!!
+              Algorithm Questions will be added soon!!
             </div>
           ) : (
             ""
           )}
           {index == 4 ? (
             <div className="bg-black text-gray-700 h-[83vh] w-full flex justify-center items-center">
-              Sorry for the incovinience, Coding Questions will be added soon!!
+              Coding Questions will be added soon!!
             </div>
           ) : (
             ""

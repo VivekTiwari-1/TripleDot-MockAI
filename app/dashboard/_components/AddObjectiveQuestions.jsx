@@ -88,7 +88,7 @@ const AddObjectiveQuestions = () => {
         onClick={() => setOpenDialog(true)}
       >
         {/* <Plus className="h-12 w-12" /> */}
-        <h2 className="text-lg text-center text-gray-500">Objective Round</h2>
+        <h2 className="text-lg text-center text-gray-500">Objective Test</h2>
       </div>
       <Dialog open={openDialog}>
         <DialogContent className="max-w-2xl">

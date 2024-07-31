@@ -69,48 +69,53 @@ const RecordAnswerSection = ({
   const updateUserAnswer = async () => {
     setLoading(true);
 
-    const feedbackPrompt =
-      "Question: " +
-      mockInterviewQuestion[activeQuestionIndex]?.question +
-      ", User answer:" +
-      userAnswer +
-      ". Depends on question and user answer for given interview questions. Please give us rating out of 10 and feedback as area of improvement if any in just 3 to 5 line in JSON format with rating field and feedback field";
+    try {
+      const feedbackPrompt =
+        "Question: " +
+        mockInterviewQuestion[activeQuestionIndex]?.question +
+        ", User answer:" +
+        userAnswer +
+        ". Depends on question and user answer for given interview questions. Please give us rating out of 10 and feedback as area of improvement if any in just 3 to 5 line in JSON format with rating field and feedback field";
 
-    const result = await chatSession.sendMessage(feedbackPrompt);
+      const result = await chatSession.sendMessage(feedbackPrompt);
 
-    const mockJsonResp = result.response
-      .text()
-      .replace("```json", "")
-      .replace("```", "");
+      const mockJsonResp = result.response
+        .text()
+        .replace("```json", "")
+        .replace("```", "");
 
-    console.log(mockJsonResp);
+      console.log(mockJsonResp);
 
-    const jsonFeedbackRep = JSON.parse(mockJsonResp);
+      const jsonFeedbackRep = JSON.parse(mockJsonResp);
 
-    const resp = await db.insert(UserAnswer).values({
-      mockIdRef: interviewData?.mockId,
-      question: mockInterviewQuestion[activeQuestionIndex]?.question,
-      correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
-      userAns: userAnswer,
-      feedback: jsonFeedbackRep?.feedback,
-      rating: jsonFeedbackRep?.rating,
-      userEmail: user?.primaryEmailAddress?.emailAddress,
-      createdAt: moment().format("DD-MM-YYYY"),
-    });
-
-    console.log(mockInterviewQuestion[activeQuestionIndex].answer);
-
-    console.log(resp);
-
-    if (resp) {
-      toast({
-        description: "User answer recorded successfully!!",
-        action: <CircleCheckBig className="text-green-600" />,
+      const resp = await db.insert(UserAnswer).values({
+        mockIdRef: interviewData?.mockId,
+        question: mockInterviewQuestion[activeQuestionIndex]?.question,
+        correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
+        userAns: userAnswer,
+        feedback: jsonFeedbackRep?.feedback,
+        rating: jsonFeedbackRep?.rating,
+        userEmail: user?.primaryEmailAddress?.emailAddress,
+        createdAt: moment().format("DD-MM-YYYY"),
       });
-      setUserAnswer("");
-      //resetTranscript;
+
+      console.log(mockInterviewQuestion[activeQuestionIndex].answer);
+
+      console.log(resp);
+
+      if (resp) {
+        toast({
+          description: "User answer recorded successfully!!",
+          action: <CircleCheckBig className="text-green-600" />,
+        });
+        setUserAnswer("");
+      }
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
     }
-    //resetTranscript;
     setLoading(false);
   };
 

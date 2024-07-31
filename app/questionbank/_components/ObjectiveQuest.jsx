@@ -1,8 +1,10 @@
 "use client";
 
 import Loader from "@/app/dashboard/_components/Loader";
+import { toast } from "@/components/ui/use-toast";
 import { db } from "@/utils/db";
 import { ObjectiveMock } from "@/utils/schema";
+import { X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 const ObjectiveQuest = () => {
@@ -16,27 +18,35 @@ const ObjectiveQuest = () => {
 
   const GetQuestions = async () => {
     setLoading(true);
-    const result = await db
-      .select()
-      .from(ObjectiveMock)
-      .orderBy(ObjectiveMock.id);
 
-    const newQuestions = [];
+    try {
+      const result = await db
+        .select()
+        .from(ObjectiveMock)
+        .orderBy(ObjectiveMock.id);
 
-    result.map((item) => {
-      const data = JSON.parse(item.jsonMockResp);
-      //console.log(data);
+      const newQuestions = [];
 
-      for (let idx = 0; idx < data.length; idx++) {
-        const quest = data[idx];
-        if (quest) {
-          newQuestions.push(quest);
-          console.log(quest);
+      result.map((item) => {
+        const data = JSON.parse(item.jsonMockResp);
+        //console.log(data);
+
+        for (let idx = 0; idx < data.length; idx++) {
+          const quest = data[idx];
+          if (quest) {
+            newQuestions.push(quest);
+            console.log(quest);
+          }
         }
-      }
-    });
+      });
 
-    setQuestions(newQuestions);
+      setQuestions(newQuestions);
+    } catch (error) {
+      toast({
+        description: "Please try again!!",
+        action: <X className="text-red-600" />,
+      });
+    }
     setLoading(false);
   };
   return (
