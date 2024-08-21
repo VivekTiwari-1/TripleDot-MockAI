@@ -1,7 +1,7 @@
 # AI-Powered Mock Interview Application
 
 ## Overview
- 
+
 Welcome to the AI-Based Mock Interview Application! This platform is designed to help you practice and improve your interview skills through personalized feedback, recorded video sessions, quizzes, and more. It offers a comprehensive set of features to simulate real interview experiences and enhance candidates' skills. Whether you're preparing for coding interviews, technical assessments, or HR rounds, our application provides the tools you need to succeed.
 
 ## Features
@@ -22,7 +22,6 @@ Welcome to the AI-Based Mock Interview Application! This platform is designed to
 
 8. **Previous Mock Rounds**: Keep track of all your previous mock interviews, allowing you to monitor your progress over time.
 
-
 ## Tech Stack
 
 - **Frontend**: React, NextJS
@@ -31,7 +30,6 @@ Welcome to the AI-Based Mock Interview Application! This platform is designed to
 - **Database**: NeonDB
 - **AI Integration**: Google Gemini
 - **Authentication**: Clerk
-
 
 ## Usage
 
@@ -48,22 +46,23 @@ Welcome to the AI-Based Mock Interview Application! This platform is designed to
 ## API Routes
 
 - `/`: Home page
- -- `/dashboard`: Create new interview or quiz and get list of previous interviews and quizzes and their feedback
-  --- `/dashboard/interview/[id]`: Interview interface
-  --- `/dashboard/interview/[id]/feedback`: Feedback of your interview session
- -- `/questionBank`: Question bank with each questions and their answer of previous sessions
- -- `/community`: Community section will be added soon
+- -- `/dashboard`: Create new interview or quiz and get list of previous interviews and quizzes and their feedback
+- --- `/dashboard/interview/[id]`: Interview interface
+- --- `/dashboard/interview/[id]/feedback`: Feedback of your interview session
+- -- `/questionBank`: Question bank with each questions and their answer of previous sessions
+- -- `/community`: Community section will be added soon
 
 ## Environment Variables
+
 Here’s a list of environment variables used in the project:
 
-NEXT_PUBLIC_CLERK_FRONTEND_API: Clerk Frontend API key for authentication.
-CLERK_API_KEY: Clerk API key for backend authentication.
-DATABASE_URL: NeonDB database connection URL.
-GEMINI_API_KEY: Google Gemini API key for AI functionalities.
+- `NEXT_PUBLIC_CLERK_FRONTEND_API`: Clerk Frontend API key for authentication.
+- `CLERK_API_KEY`: Clerk API key for backend authentication.
+- `DATABASE_URL`: NeonDB database connection URL.
+- `GEMINI_API_KEY`: Google Gemini API key for AI functionalities.
 
+## Contributing
 
-##Contributing
 Contributions are welcome! If you'd like to contribute, please follow these steps:
 
 1. Fork the repository.
@@ -73,11 +72,10 @@ Contributions are welcome! If you'd like to contribute, please follow these step
 5. Push to the branch (git push origin feature/your-feature-name).
 6. Open a pull request.
 
-##Contact
+## Contact
+
 Contact me at `vivektiwarii4545@gmail.com` for any queries or support.
 
-##License
+## License
+
 This project is licensed under the MIT License.
-
-
-
