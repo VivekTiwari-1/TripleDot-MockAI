@@ -36,53 +36,54 @@ const AddObjectiveQuestions = () => {
 
     setLoading(true);
 
-    try {
-      const InputPrompt =
-        "Type of question: " +
-        techStack +
-        ", Level of question: " +
-        level +
-        ", and" +
-        keyword +
-        `- Based on this information, generate 10 objective interview questions along with 4 options and their answers in this JSON structure without any extra space in between - {"question": "", "options": [], "answer": ""}`;
+    // try {
+    const InputPrompt =
+      "Type of question: " +
+      techStack +
+      ", Level of question: " +
+      level +
+      ", and" +
+      keyword +
+      `- Based on this information, generate 10 objective interview questions along with 4 options and their answers in this JSON structure without any extra space in between - {"question": "", "options": [], "answer": ""}`;
 
-      const result = await chatSession.sendMessage(InputPrompt);
-      const MockJsonResp = result.response
-        .text()
-        .replace("```json", "")
-        .replace("```", "");
+    const result = await chatSession.sendMessage(InputPrompt);
+    const MockJsonResp = result.response
+      .text()
+      .replace("```json", "")
+      .replace("```", "");
 
-      setJsonResponse(MockJsonResp);
+    setJsonResponse(MockJsonResp);
 
-      if (MockJsonResp) {
-        const resp = await db
-          .insert(ObjectiveMock)
-          .values({
-            mockId: uuidv4(),
-            jsonMockResp: MockJsonResp,
-            techStack: techStack,
-            level: level,
-            keyword: keyword,
-            createdBy: user?.primaryEmailAddress?.emailAddress,
-            createdAt: moment().format("DD-MM-YYYY"),
-          })
-          .returning({ mockId: MockInterview.mockId });
+    if (MockJsonResp) {
+      const resp = await db
+        .insert(ObjectiveMock)
+        .values({
+          mockId: uuidv4(),
+          jsonMockResp: MockJsonResp,
+          techStack: techStack,
+          level: level,
+          keyword: keyword,
+          createdBy: user?.primaryEmailAddress?.emailAddress,
+          createdAt: moment().format("DD-MM-YYYY"),
+        })
+        .returning({ mockId: MockInterview.mockId });
 
-        if (resp) {
-          setOpenDialog(false);
-          router.push(
-            "/dashboard/interview/" + resp[0]?.mockId + "/objectiveTest"
-          );
-        }
-      } else {
-        console.log("ERROR");
+      if (resp) {
+        router.push(
+          "/dashboard/interview/" + resp[0]?.mockId + "/objectiveTest"
+        );
+
+        setOpenDialog(false);
       }
-    } catch (error) {
-      toast({
-        description: "Please try again!!",
-        action: <X className="text-red-600" />,
-      });
+    } else {
+      console.log("ERROR");
     }
+    // } catch (error) {
+    //   toast({
+    //     description: "Please try again!!",
+    //     action: <X className="text-red-600" />,
+    //   });
+    // }
 
     setLoading(false);
   };

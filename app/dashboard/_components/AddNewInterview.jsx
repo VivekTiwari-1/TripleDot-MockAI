@@ -73,10 +73,10 @@ const AddNewInterview = () => {
 
         console.log(resp);
         if (resp) {
-          setOpenDialog(false);
           router.push(
             "/dashboard/interview/" + resp[0]?.mockId + "/technicalRound"
           );
+          setOpenDialog(false);
         }
       } else {
         console.log("ERROR");
@@ -98,7 +98,7 @@ const AddNewInterview = () => {
         onClick={() => setOpenDialog(true)}
       >
         {/* <Plus className="h-12 w-12" /> */}
-        <h2 className="text-lg text-center text-gray-500">Add New</h2>
+        <h2 className="text-lg text-center text-gray-500">New Interview</h2>
       </div>
       <Dialog open={openDialog}>
         <DialogContent className="max-w-2xl">

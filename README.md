@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI-Powered Mock Interview Application
 
-## Getting Started
+## Overview
+ 
+Welcome to the AI-Based Mock Interview Application! This platform is designed to help you practice and improve your interview skills through personalized feedback, recorded video sessions, quizzes, and more. It offers a comprehensive set of features to simulate real interview experiences and enhance candidates' skills. Whether you're preparing for coding interviews, technical assessments, or HR rounds, our application provides the tools you need to succeed.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. **Variety of Interview types**: Our application supports a variety of interview types to help you prepare comprehensively like technical, coding, HR, Situational and behavioral interviews.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **AI-Driven Personalized Feedback**: Receive detailed, constructive feedback on your interview performance, tailored to your responses and presentation.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. **Video Recording**: Each mock interview session is recorded, allowing you to review and analyze your performance later.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+4. **Timed Practice Sessions**: Simulate real interview conditions with customizable timer settings for each question or the entire interview.
 
-## Learn More
+5. **Integrated Coding Environment**: Practice coding challenges within the application, mimicking real technical interview scenarios.
 
-To learn more about Next.js, take a look at the following resources:
+6. **Technology Quizzes**: Test and improve your knowledge with quizzes covering various technologies and concepts.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+7. **Extensive Question Bank**: Access a vast collection of interview questions across different difficulty levels and topics.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+8. **Previous Mock Rounds**: Keep track of all your previous mock interviews, allowing you to monitor your progress over time.
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Tech Stack
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **Frontend**: React, NextJS
+- **Styling**: TailwindCSS
+- **Backend**: DrizzleORM
+- **Database**: NeonDB
+- **AI Integration**: Google Gemini
+- **Authentication**: Clerk
+
+
+## Usage
+
+- **Sign Up / Sign In**: Start by creating an account or signing in using your Clerk credentials.
+
+- **Dashboard**: After logging in, you'll be taken to the dashboard where you can start a new mock interview, view previous sessions, or take a quiz.
+
+- **Mock Interview**: Select your desired interview type (e.g., Technical, Coding, HR, Behavioral, Situational) and begin the session. The integrated coding environment allows you to solve problems in real-time.
+
+- **Review Sessions**: After completing an interview, review the recorded video and feedback provided by the AI.
+
+- **Quiz**: Test your knowledge on various technical topics with timed quizzes.
+
+## API Routes
+
+- `/`: Home page
+ -- `/dashboard`: Create new interview or quiz and get list of previous interviews and quizzes and their feedback
+  --- `/dashboard/interview/[id]`: Interview interface
+  --- `/dashboard/interview/[id]/feedback`: Feedback of your interview session
+ -- `/questionBank`: Question bank with each questions and their answer of previous sessions
+ -- `/community`: Community section will be added soon
+
+## Environment Variables
+Here’s a list of environment variables used in the project:
+
+NEXT_PUBLIC_CLERK_FRONTEND_API: Clerk Frontend API key for authentication.
+CLERK_API_KEY: Clerk API key for backend authentication.
+DATABASE_URL: NeonDB database connection URL.
+GEMINI_API_KEY: Google Gemini API key for AI functionalities.
+
+
+##Contributing
+Contributions are welcome! If you'd like to contribute, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature/your-feature-name).
+3. Make your changes.
+4. Commit your changes (git commit -m 'Add some feature').
+5. Push to the branch (git push origin feature/your-feature-name).
+6. Open a pull request.
+
+##Contact
+Contact me at `vivektiwarii4545@gmail.com` for any queries or support.
+
+##License
+This project is licensed under the MIT License.
+
+
+
