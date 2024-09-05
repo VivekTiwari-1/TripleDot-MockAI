@@ -25,11 +25,15 @@ Welcome to the AI-Based Mock Interview Application! This platform is designed to
 ## Tech Stack
 
 - **Frontend**: React, NextJS
-- **Styling**: TailwindCSS
+- **Styling**: TailwindCSS, framer-motion
 - **Backend**: DrizzleORM
 - **Database**: NeonDB
 - **AI Integration**: Google Gemini
 - **Authentication**: Clerk
+- **Code Editor**: monaco-editor, highlight.js, js-beautify
+- **Video and Voice recording**: react-speech-recognition, react-webcam
+- **Speech to text**: react-hook-speech-to-text
+- **idb or IndexedDB**: To store video on user's local browser
 
 ## Usage
 

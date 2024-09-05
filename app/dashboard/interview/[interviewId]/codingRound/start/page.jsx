@@ -173,37 +173,30 @@ const page = ({ params }) => {
                 </div>
 
                 <div className="mt-8">
-                  <h1 className="text-lg font-semibold mb-4 ">Examples</h1>
+                  <h1 className="text-lg font-semibold mb-4 ">Example</h1>
                   <div className="bg-gray-900 border border-gray-700 rounded-md p-3">
                     <p className="">
                       <strong>Input: </strong>
-                      {mockInterviewQuestion?.sample_input[0]}
-                    </p>
-                    <p className="">
-                      <strong>Output: </strong>
-                      {mockInterviewQuestion?.sample_output[0]}
+                      {mockInterviewQuestion?.sample_input &&
+                        mockInterviewQuestion?.sample_input?.map(
+                          (input, index) => <p>{input}</p>
+                        )}
                     </p>
                   </div>
                   <div className="mt-8 bg-gray-900 border border-gray-700 rounded-md p-3">
                     <p className="">
-                      <strong>Input: </strong>
-                      {mockInterviewQuestion?.sample_input[1]}
-                    </p>
-                    <p className="">
                       <strong>Output: </strong>
-                      {mockInterviewQuestion?.sample_output[1]}
+                      {mockInterviewQuestion?.sample_output &&
+                        mockInterviewQuestion?.sample_output?.map(
+                          (output, index) => <p>{output}</p>
+                        )}
                     </p>
                   </div>
                 </div>
-                <div className="mt-8 ">
+                <div className="my-8 ">
                   <h1 className="text-lg font-semibold">Constraints</h1>
                   <p className="">{mockInterviewQuestion?.constraints}</p>
                 </div>
-                <p className="mt-8">
-                  {" "}
-                  <span className="font-medium">Platform:</span>{" "}
-                  {mockInterviewQuestion?.platform}
-                </p>
               </div>
             </div>
             <div className=" right-2 bg-gray-900 px-8 pt-2 pb-8">

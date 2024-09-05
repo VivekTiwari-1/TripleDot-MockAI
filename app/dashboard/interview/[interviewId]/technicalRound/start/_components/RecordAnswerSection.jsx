@@ -21,7 +21,6 @@ const RecordAnswerSection = ({
   const [listening, setListening] = useState();
   const { user } = useUser();
 
-  // NEW SECTION STARTS HERE
   const recognition = useRef(null);
 
   useEffect(() => {

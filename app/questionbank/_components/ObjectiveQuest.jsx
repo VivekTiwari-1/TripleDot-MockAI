@@ -35,7 +35,6 @@ const ObjectiveQuest = () => {
           const quest = data[idx];
           if (quest) {
             newQuestions.push(quest);
-            console.log(quest);
           }
         }
       });

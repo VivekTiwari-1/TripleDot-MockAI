@@ -41,7 +41,7 @@ const InterviewQuest = () => {
       setQuestions(newQuestions);
     } catch (error) {
       toast({
-        description: "Please try again!!",
+        description: "Something went wrong!! Please try again!",
         action: <X className="text-red-600" />,
       });
     }

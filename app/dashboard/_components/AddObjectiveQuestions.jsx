@@ -90,11 +90,16 @@ const AddObjectiveQuestions = () => {
   return (
     <div>
       <div
-        className="p-10 border-[2px] border-dotted border-gray-800 rounded-lg bg-gradient-to-t from-gray-950 via-gray-800 to-gray-950 hover:scale-95 hover:shadow-sm cursor-pointer transition-all"
+        className="p-10 border-[2px] border-dotted border-gray-700 rounded-lg bg-slate-950 hover:scale-95 hover:shadow-sm cursor-pointer transition-all"
         onClick={() => setOpenDialog(true)}
       >
         {/* <Plus className="h-12 w-12" /> */}
-        <h2 className="text-lg text-center text-gray-500">Objective Round</h2>
+        <h2 className="text-lg text-center text-gray-500">
+          Create New <br />
+          <span className="font-semibold text-xl text-gray-400">
+            Objective Round
+          </span>
+        </h2>
       </div>
       <Dialog open={openDialog}>
         <DialogContent className="max-w-2xl">

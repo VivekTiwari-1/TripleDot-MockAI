@@ -44,7 +44,7 @@ export default function Home() {
       {/* NAVBAR SECTION */}
       <div className="Navbar w-full h-fit md:w-[75%] flex justify-between items-center border-gray-700 rounded-full border px-4 lg:px-12 py-5">
         <h1 className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600">
-          BRANDING
+          TripleDot.
         </h1>
         <ul className="hidden md:flex gap-6 items-center text-gray-400">
           <Link href="/pricing">
@@ -77,7 +77,7 @@ export default function Home() {
         <div className="absolute flex justify-center flex-col items-center z-40">
           <div className="flex justify-center flex-col items-center">
             <h1 className="font-bold text-6xl mb-7 bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-gray-500">
-              Master Your Interviews with AI
+              Ace Interviews with Confidence
             </h1>
             <div className="flex flex-col text-lg text-gray-500 items-center">
               <p>
@@ -110,7 +110,7 @@ export default function Home() {
       </div>
 
       {/* HOW IT WORKS? */}
-      <div className="md:h-[85vh] w-full flex flex-col items-center bg-gradient-to-t from-gray-950 rounded-3xl p-4 md:px-24 mt-16">
+      <div className="md:h-[85vh] w-full flex flex-col items-center bg-gradient-to-t from-gray-900 rounded-3xl p-4 md:px-24 mt-16">
         <h1 className="text-3xl font-bold mt-16 text-gray-400">
           <p>How it Works?</p>
           <p className="h-[2px] w-48 bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 mt-2"></p>
@@ -118,7 +118,7 @@ export default function Home() {
 
         <div className="flex flex-col md:flex-row mt-4 items-center gap-12">
           <div className="flex flex-col justify-center items-center gap-4">
-            <div className="border-4 rounded-full text-gray-300 border-blue-950 p-5 ">
+            <div className="border-4 rounded-full text-gray-300 border-blue-900 p-5 ">
               <CheckSquare />
             </div>
             <h2 className="font-bold text-xl text-gray-400">
@@ -130,7 +130,7 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-col justify-center items-center gap-4 md:mt-32">
-            <div className="border-4 rounded-full text-gray-300 border-blue-950 p-5 ">
+            <div className="border-4 rounded-full text-gray-300 border-blue-900 p-5 ">
               <Timer />
             </div>
             <h2 className="font-bold text-xl text-gray-400">
@@ -142,7 +142,7 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-col justify-center items-center gap-4 md:mt-32">
-            <div className="border-4 rounded-full text-gray-300 border-blue-950 p-5 ">
+            <div className="border-4 rounded-full text-gray-300 border-blue-900 p-5 ">
               <Contact />
             </div>
             <h2 className="font-bold text-xl text-gray-400">
@@ -154,7 +154,7 @@ export default function Home() {
             </p>
           </div>
           <div className="flex flex-col justify-center items-center gap-4">
-            <div className="border-4 rounded-full text-gray-300 border-blue-950 p-5 ">
+            <div className="border-4 rounded-full text-gray-300 border-blue-900 p-5 ">
               <BarChart />
             </div>
             <h2 className="font-bold text-xl text-gray-400">
@@ -330,7 +330,7 @@ export default function Home() {
 
       {/* FOOTER SECTION */}
       <div className="Footer w-full">
-        <p className="h-[2px] w-full bg-gradient-to-r from-gray-900 via-gray-700 to-gray-900 mt-16"></p>
+        <p className="h-[2px] w-full bg-gradient-to-r from-gray-950 via-gray-700 to-gray-950 mt-16"></p>
         <div className=" flex justify-center text-sm gap-28 py-8">
           <h1 className="text-gray-700 flex items-center">
             <span>Designed & Developed with&nbsp;</span>

@@ -24,14 +24,10 @@ const StartInterview = ({ params }) => {
   const [isVideoOn, setVideoOn] = useState(false);
 
   const [recording, setRecording] = useState(false);
-  const [playing, setPlaying] = useState(false);
-  const [videoURL, setVideoURL] = useState(null);
-  const [mediaBlobUrl, setMediaBlobUrl] = useState(null);
   const [indexedDb, setIndexedDb] = useState(null);
 
   const mediaRecorder = useRef(null);
   const mediaChunks = useRef([]);
-  const recognition = useRef(null);
 
   const videoRef = useRef(null);
 
@@ -106,7 +102,9 @@ const StartInterview = ({ params }) => {
         action: <X className="text-red-600" />,
       });
     }
+
     setRecording(false);
+    setVideoOn(false);
   };
 
   useEffect(() => {}, [recording]);
@@ -173,7 +171,7 @@ const StartInterview = ({ params }) => {
                       recording ? "bg-red-600" : "bg-blue-950"
                     }`}
                   >
-                    {recording ? "Stop Recording" : "Enable Video Recording"}
+                    {recording ? "Stop Recording" : "Start Video Recording"}
                   </Button>
                 ) : (
                   <>
