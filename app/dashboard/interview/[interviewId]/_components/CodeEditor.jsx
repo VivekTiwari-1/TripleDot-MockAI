@@ -73,9 +73,9 @@ const CodeEditor = ({ onValueChange, language }) => {
       </div>
       <div className="flex justify-end">
         <div className="flex gap-4">
-          <Button onClick={runCode} className="mt-4 bg-gray-950">
+          {/* <Button onClick={runCode} className="mt-4 bg-gray-950">
             Check Errors
-          </Button>
+          </Button> */}
           <Button onClick={extractCode} className="mt-4 bg-gray-950">
             Save
           </Button>
